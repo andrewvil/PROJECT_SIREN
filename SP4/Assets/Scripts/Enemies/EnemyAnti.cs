@@ -60,7 +60,7 @@ public class EnemyAnti : EnemyBase
         currState = newState;
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(GameManager.instance.bGameOver) 
             return;
