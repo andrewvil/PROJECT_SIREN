@@ -7,16 +7,21 @@ public class NightVisionIndicator : MonoBehaviour
 {
     public static NightVisionIndicator instance;
 
+    //[SerializeField] private GameObject indicator;
+
+
     [SerializeField]
-    private GameObject indicator;
+    private GameObject scanPrefab;
 
     [SerializeField]
     private SightController sightController;
 
-    [SerializeField]
-    private TMP_Text scanDetails;
+    
 
     public GameObject targetObject;
+
+    [SerializeField] private List<GameObject> targets;
+    [SerializeField] private List<GameObject> indicators;
 
     // Start is called before the first frame update
     void Start()
@@ -26,80 +31,78 @@ public class NightVisionIndicator : MonoBehaviour
 
     void Update()
     {
-        if(targetObject!=null)
+        //targets and indicators should have the same list size
+        ScanObjects();
+        int count = indicators.Count;
+        for(int i = 0; i < count; i++)
         {
-            Vector3 pos = Camera.main.WorldToScreenPoint(targetObject.transform.position);
-            indicator.transform.position = Vector3.Lerp(indicator.transform.position,pos,0.2f);
-        }
+            if(targets.Count-1 < i)
+            {
+                Destroy(indicators[i]);
+                indicators.RemoveAt(i);
+                continue;
+            }
+            else if(targets[i] == null)
+            {
+                Destroy(indicators[i]);
+                indicators.RemoveAt(i);
+                continue;
+            }
+            
+            TMP_Text inddetails = indicators[i].GetComponentInChildren<TMP_Text>();
+            if(inddetails.text != targets[i].GetComponent<ISightObserver>().GetDetails())
+            {
+                inddetails.text = targets[i].GetComponent<ISightObserver>().GetDetails();
+                inddetails.color = targets[i].GetComponent<EnemyBase>()?Color.red:Color.white;
+            }
 
+            Vector3 targetPos = Camera.main.WorldToScreenPoint(targets[i].transform.position);
+            indicators[i].transform.position = Vector3.Lerp(indicators[i].transform.position, targetPos, 0.2f);
+        }
     }
 
-    Coroutine co;
+    //Coroutine co;
     void OnEnable()
     {
-        co = StartCoroutine(ScanObjects());
+        //co = StartCoroutine(ScanObjects());
     }
     
     void OnDisable()
     {
-        StopCoroutine(co);
-        co = null;
+        //StopCoroutine(co);
+        //co = null;
     }
 
-    private IEnumerator ScanObjects()
+    private void ScanObjects()
     {
-        List<GameObject> targetsList = sightController.GetObjectsInRange(20f);
+        List<GameObject> targetsList = sightController.GetObjectsInRange(60f);
         if(targetsList.Count > 0)
         {
-            if(targetObject!=null)
+            Debug.Log("scan found");
+            for(int i = 0; i < targetsList.Count; i++)
             {
-                //if not same, then switch details
-                if(targetObject!=targetsList[0])
+                if(targets.Contains(targetsList[i]))
                 {
-                    if(scroll != null) 
-                    {
-                        StopCoroutine(scroll);
-                        scroll = null;
-                    }
-                    indicator.transform.position = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
-                    scanDetails.color = targetsList[0].GetComponent<EnemyBase>()?Color.red:Color.white;
-                    scroll = StartCoroutine(ScrollDetails(targetsList[0].GetComponent<ISightObserver>()?.GetDetails()));
+                    continue;
                 }
+                GameObject ind = Instantiate(scanPrefab, transform);
+                ind.transform.position = Input.mousePosition;
+                indicators.Add(ind);
             }
-
-            targetObject = targetsList[0];
-            
-            if(!indicator.activeInHierarchy)
-            {
-                if(scroll != null) 
-                {
-                    StopCoroutine(scroll);
-                    scroll = null;
-                }
-                indicator.SetActive(true);
-                indicator.transform.position = new Vector2(Input.mousePosition.x,Input.mousePosition.y);
-                scanDetails.color = targetsList[0].GetComponent<EnemyBase>()?Color.red:Color.white;
-                scroll = StartCoroutine(ScrollDetails(targetObject.GetComponent<ISightObserver>()?.GetDetails()));
-            }
+            targets = targetsList;
         }
         else
-            indicator.SetActive(false);
-        yield return new WaitForSeconds(0.1f);
-        co = StartCoroutine(ScanObjects());
-    }
-
-    Coroutine scroll;
-    private IEnumerator ScrollDetails(string details)
-    {
-        if(scroll!=null) yield break;
-        scanDetails.text = "";
-        foreach(char character in details)
         {
-            scanDetails.text = scanDetails.text + character;
-            PlayerAudioController.instance.PlayAudio(AUDIOSOUND.SCROLL);
-            yield return new WaitForSeconds(0.03f);
-        }
+            targets.Clear();
 
-        scroll = null;
+            if(indicators.Count > 0)
+            {
+                foreach(GameObject obj in indicators)
+                {
+                    Destroy(obj);
+                }
+            }
+            indicators.Clear();
+        }
     }
 }
