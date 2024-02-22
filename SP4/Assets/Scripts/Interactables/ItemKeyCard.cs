@@ -43,6 +43,6 @@ public class ItemKeyCard : MonoBehaviour, IInteract, IPhotoObserver, ISightObser
 
     public string GetDetails()
     {
-        return "??";
+        return "Level " + accessLevel + " Access Keycard";
     }
 }

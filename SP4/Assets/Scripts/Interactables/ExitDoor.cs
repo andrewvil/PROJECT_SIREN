@@ -11,7 +11,7 @@ public class ExitDoor : MonoBehaviour, IInteract
 
     public void OnHover()
     {
-        UIManager.instance.OnHover("Escape");
+        UIManager.instance.OnHover("[E] Escape");
     }
 
     public void OnInteract(GameObject inventory)

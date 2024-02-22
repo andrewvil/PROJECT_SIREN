@@ -8,7 +8,7 @@ public class EMPswitch : MonoBehaviour, IInteract
 
     public string GetItemName()
     {
-        return "Press E to deactivate";
+        return "[E] Deactivate";
     }
 
     public void OnHover()

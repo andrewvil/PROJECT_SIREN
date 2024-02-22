@@ -21,7 +21,11 @@ public class InteractController : MonoBehaviour
                 prev = hit.transform.gameObject;
                 hit.transform.GetComponent<IInteract>()?.OnHover();
                 if (Input.GetKeyDown(KeyCode.E))
+                {
                     hit.transform.GetComponent<IInteract>().OnInteract(inventory);
+                    if (hit.transform.GetComponent<ItemHealth>() != null)
+                        GetComponent<PlayerController>().UpdateHealth(hit.transform.GetComponent<ItemHealth>().health);
+                }
             }
         }
         else

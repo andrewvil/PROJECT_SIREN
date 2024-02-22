@@ -100,7 +100,7 @@ public class LevelDoor : MonoBehaviour, IInteract, IPhotoObserver, ISightObserve
             UIManager.instance.OnHover("Requires Level "+accessLevel+" access");
         else
         {
-            UIManager.instance.OnHover("Open");
+            UIManager.instance.OnHover("[E] Open");
         }
     }
 
