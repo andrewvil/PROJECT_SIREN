@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -43,6 +44,11 @@ public class GameManager : MonoBehaviour
     
     void Awake()
     {
+        playerData.LoadData();
+        if(playerData.hasLoad)
+        {
+            Load();
+        }
         bGameOver = false;
         instance = this;
         accessLevel = 0;
@@ -74,22 +80,18 @@ public class GameManager : MonoBehaviour
         }
 
         //Floors
-        playerData.floorIds.Clear();
         playerData.floorLayers.Clear();
         GameObject[] floors = GameObject.FindGameObjectsWithTag("Floor");
         foreach (GameObject floor in floors)
         {
-            playerData.floorIds.Add(floor.GetInstanceID());
             playerData.floorLayers.Add(floor.layer);
         }
 
         //Doors
-        playerData.doorIds.Clear();
         playerData.doorLayers.Clear();
         GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
         foreach (GameObject door in doors)
         {
-            playerData.doorIds.Add(door.GetInstanceID());
             playerData.doorLayers.Add(door.layer);
         }
 
@@ -107,35 +109,16 @@ public class GameManager : MonoBehaviour
 
     public void Load()
     {
-        if (!playerData.hasLoad)
-        {
-            return;
-        }
-
         GameObject[] floors = GameObject.FindGameObjectsWithTag("Floor");
-        for (int i = 0; i < playerData.floorIds.Count; i++)
+        for (int i = 0; i < floors.Length; i++)
         {
-            for (int j = 0; j < playerData.floorIds.Count; j++)
-            {
-                if (floors[i].GetInstanceID() == playerData.floorIds[j])
-                {
-                    floors[i].layer = playerData.floorLayers[j];
-                    continue;
-                }
-            }
+            floors[i].layer = playerData.floorLayers[i];
         }
 
         GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
-        for (int i = 0; i < playerData.doorIds.Count; i++)
+        for (int i = 0; i < doors.Length; i++)
         {
-            for (int j = 0; j < playerData.doorIds.Count; j++)
-            {
-                if (doors[i].GetInstanceID() == playerData.doorIds[j])
-                {
-                    doors[i].layer = playerData.doorLayers[j];
-                    continue;
-                }
-            }
+            doors[i].layer = playerData.doorLayers[i];
         }
     }
 
