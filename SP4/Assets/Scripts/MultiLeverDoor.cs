@@ -6,6 +6,7 @@ public class MultiLeverDoor : MonoBehaviour
 {
     [SerializeField] private GameObject door1;
     [SerializeField] private GameObject door2;
+    [SerializeField] private GameObject doorIndicator;
     [SerializeField] private int powerThreshold;
     [SerializeField] private Collider doorCollider;
 
@@ -14,6 +15,7 @@ public class MultiLeverDoor : MonoBehaviour
     {
         isOpen = true;
         doorCollider.enabled = !isOpen;
+        doorIndicator.GetComponent<Renderer>().material.SetColor("_BaseColor", Color.green);
         //TODO: Open
     }
 
@@ -21,6 +23,7 @@ public class MultiLeverDoor : MonoBehaviour
     {
         isOpen = false;
         doorCollider.enabled = !isOpen;
+        doorIndicator.GetComponent<Renderer>().material.SetColor("_BaseColor", Color.red);
         //TODO: Close
     }
     private int power;

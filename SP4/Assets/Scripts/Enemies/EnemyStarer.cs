@@ -53,7 +53,8 @@ public class EnemyStarer : EnemyBase, ISightObserver, IPhotoObserver
         if (isFlashed)
         {
             currWaypoint = Random.Range(0, patrolWaypoints.Count);
-            Move(patrolWaypoints[currWaypoint]);
+            transform.position = patrolWaypoints[currWaypoint].position;
+            isFlashed = false;
             return;
         }
         switch (currentState)

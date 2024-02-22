@@ -21,6 +21,9 @@ public class LevelDoor : MonoBehaviour, IInteract, IPhotoObserver, ISightObserve
     [SerializeField]
     private AudioSource source;
 
+    [SerializeField]
+    private GameObject doorIndicator;
+
     private BoxCollider collider;
 
     private bool open;
@@ -55,11 +58,13 @@ public class LevelDoor : MonoBehaviour, IInteract, IPhotoObserver, ISightObserve
         {
             door.position = Vector3.Slerp(door.position, openPosition.position, openSpeed);
             collider.center = Vector3.Slerp(collider.center, openPosition.localPosition, openSpeed);
+            doorIndicator.GetComponent<Renderer>().material.SetColor("_BaseColor", Color.green);
         }
         else
         {
             door.position = Vector3.Slerp(door.position, closePosition.position, openSpeed);
             collider.center = Vector3.Slerp(collider.center, closePosition.localPosition, openSpeed);
+            doorIndicator.GetComponent<Renderer>().material.SetColor("_BaseColor", Color.red);
         }
     }
 
@@ -126,5 +131,6 @@ public class LevelDoor : MonoBehaviour, IInteract, IPhotoObserver, ISightObserve
     {
         gameObject.layer = layer;
         door.gameObject.layer = layer;
+        doorIndicator.layer = layer;
     }
 }
