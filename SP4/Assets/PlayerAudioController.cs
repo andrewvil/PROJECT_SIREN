@@ -52,7 +52,13 @@ public enum AUDIOSOUND
     DANGER = 11,
     BUTTONHOVER = 12,
 
-    HEARTBEAT = 13
+    HEARTBEAT = 13,
+
+    MEDKIT = 14,
+    HEAL = 15,
+
+    SYSTEMSDOWN = 16,
+    CRITICAL = 17
 
     //more to add
 }

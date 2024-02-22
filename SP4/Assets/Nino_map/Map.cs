@@ -35,6 +35,18 @@ public class Map : MonoBehaviour
         }
     }
 
+    void OnDisable()
+    {
+        isUsing = false;
+    }
+
+    void OnEnable()
+    {
+        Vector3 newPos = Camera.main.transform.position;
+        newPos.y = transform.position.y;
+        transform.position = newPos;
+    }
+
     public bool isUsing = false;
     private void MapDisplay()
     {
@@ -44,29 +56,29 @@ public class Map : MonoBehaviour
         mapCamera.transform.eulerAngles = new Vector3(90.0f, 0.0f, 0.0f);
         if (Input.GetMouseButton(0))
         {
+            //Cursor.lockState = CursorLockMode.Locked;
             isUsing = true;
             float mouseX, mouseY;
-            mouseX = -Input.GetAxis("Mouse X");
-            mouseY = -Input.GetAxis("Mouse Y");
+            mouseX = -Input.GetAxis("Mouse X") * 2.5f;
+            mouseY = -Input.GetAxis("Mouse Y") * 2.5f;
             Debug.Log("mouseX: " + mouseX + ", mouseY: " + mouseY);
             Vector3 moveDir = mapCamera.transform.up * mouseY + mapCamera.transform.right * mouseX;
             mapCamera.transform.position += new Vector3(moveDir.x, 0, moveDir.z) * Time.deltaTime * 15.0f;
         }
         else if (Input.GetMouseButtonUp(0))
         {
+            //Cursor.lockState = CursorLockMode.None;
             isUsing = false;
-            Vector3 newPos = Camera.main.transform.position;
-            newPos.y = transform.position.y;
-            transform.position = newPos;
         }
     }
     private void Zoom()
     {
+        if(!isUsing) return;
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            if (mapCamera.orthographicSize + 0.5f < mapMaxSize)
+            if (mapCamera.orthographicSize + 2.5f < mapMaxSize)
             {
-                mapCamera.orthographicSize += 0.5f;
+                mapCamera.orthographicSize += 2.5f;
             }
             else
             {
@@ -75,9 +87,9 @@ public class Map : MonoBehaviour
         }
         else if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            if (mapCamera.orthographicSize - 0.5f > 15.0f)
+            if (mapCamera.orthographicSize - 2.5f > 15.0f)
             {
-                mapCamera.orthographicSize -= 0.5f;
+                mapCamera.orthographicSize -= 2.5f;
             }
             else
             {

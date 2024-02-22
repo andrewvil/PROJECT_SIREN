@@ -40,6 +40,7 @@ public class Turret : EnemyBase
 
     private void Update()
     {
+        if(GameManager.instance.bGameOver) return;
         FSM();
     }
 

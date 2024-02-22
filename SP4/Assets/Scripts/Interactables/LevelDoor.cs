@@ -33,6 +33,9 @@ public class LevelDoor : MonoBehaviour, IInteract, IPhotoObserver, ISightObserve
 
     float fTime_elapsed;
 
+    [SerializeField]
+    private PlayerData playerData;
+
     private void Start()
     {
         fTime_elapsed = 0f;
@@ -71,7 +74,11 @@ public class LevelDoor : MonoBehaviour, IInteract, IPhotoObserver, ISightObserve
     private void ToggleDoor()
     {
         if(fTime_elapsed < 1f) return;
-        if(accessLevel <= GameManager.instance.accessLevel)
+        if(!playerData.hasLoad)
+        {
+            source.PlayOneShot(lockedClip);
+        }
+        else if(accessLevel <= GameManager.instance.accessLevel)
         {
             fTime_elapsed = 0f;
             open = !open;
@@ -98,6 +105,10 @@ public class LevelDoor : MonoBehaviour, IInteract, IPhotoObserver, ISightObserve
         if(fTime_elapsed < 1f) return;
         if(accessLevel > GameManager.instance.accessLevel)
             UIManager.instance.OnHover("Requires Level "+accessLevel+" access");
+        else if (!playerData.hasLoad)
+        {
+            UIManager.instance.OnHover("Finish the tutorial first!");
+        }
         else
         {
             UIManager.instance.OnHover("[E] Open");

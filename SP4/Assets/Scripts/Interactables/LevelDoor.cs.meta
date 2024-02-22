@@ -3,7 +3,16 @@ guid: 014e4b526663ee74fb811e67c0359473
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - door: {instanceID: 0}
+  - closePosition: {instanceID: 0}
+  - openPosition: {instanceID: 0}
+  - doorOpen: {instanceID: 0}
+  - doorClose: {instanceID: 0}
+  - lockedClip: {instanceID: 0}
+  - source: {instanceID: 0}
+  - doorIndicator: {instanceID: 0}
+  - playerData: {fileID: 11400000, guid: d061a9330cde5da4faae4d3045decfc9, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -19,6 +19,7 @@ public class PlayerData : ScriptableObject
         if (FileManager.WriteToFile("playerdata.json", s))
         {
             Debug.Log("Save player data successful");
+            hasLoad = true;
         }
     }
     public void LoadData()

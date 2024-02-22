@@ -42,6 +42,7 @@ public class EnemyStarer : EnemyBase, ISightObserver, IPhotoObserver
     // Update is called once per frame
     void Update()
     {
+        if(GameManager.instance.bGameOver) return;
         PlayerSeen();
         FSM();
     }
@@ -122,6 +123,7 @@ public class EnemyStarer : EnemyBase, ISightObserver, IPhotoObserver
                     if (agent.remainingDistance <= 0.8f)
                     {
                         GameManager.instance.lastHitEnemy = jumpscareCamTransform.gameObject;
+                        GameManager.instance.deathTip = "Don't look away. Fight back with your camera.";
                         AttackPlayer();
                         speed = waitTime = 0;
                         agent.velocity= Vector3.zero;

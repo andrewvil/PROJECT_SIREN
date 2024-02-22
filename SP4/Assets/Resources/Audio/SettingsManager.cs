@@ -14,13 +14,7 @@ public class SettingsManager : MonoBehaviour
 
     [SerializeField] private Volume volume;
     [SerializeField] private Slider brightSlider;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    
     public void SetMasterVolume()
     {
         mixer.SetFloat("MasterVolume", masterSlider.value);

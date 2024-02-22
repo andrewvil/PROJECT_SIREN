@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Decoy : MonoBehaviour, IItem, ISightObserver, IPhotoObserver, IInteract
@@ -26,12 +25,19 @@ public class Decoy : MonoBehaviour, IItem, ISightObserver, IPhotoObserver, IInte
     [SerializeField]
     private Collider rangeCollider;
 
+    [SerializeField] private List<GameObject> holograms;
+
     bool isDroppped;
 
     void Awake()
     {
         isDroppped = true;
         rangeCollider.enabled = false;
+
+        foreach(GameObject hologram in holograms)
+        {
+            hologram.SetActive(false);
+        }
     }
 
     void OnEnable()
@@ -69,16 +75,14 @@ public class Decoy : MonoBehaviour, IItem, ISightObserver, IPhotoObserver, IInte
 
     }
 
-    void Start()
-    {
-        rb.constraints = RigidbodyConstraints.FreezeAll;
-    }
-
     void Update()
     {
         if(GameManager.instance.bGameOver) return;
         if(transform.parent != null && !isDroppped)
+        {
+            transform.LookAt(transform.position + Camera.main.transform.forward);
             transform.position = Vector3.Lerp(transform.position, Camera.main.transform.position + (Camera.main.transform.forward + (Camera.main.transform.right - Camera.main.transform.up) * 0.5f) * 0.5f, Time.deltaTime * 25f);
+        }
     }
 
     int pulses = 5;
@@ -89,7 +93,14 @@ public class Decoy : MonoBehaviour, IItem, ISightObserver, IPhotoObserver, IInte
         rb.AddForce(Camera.main.transform.forward * 15f + Camera.main.transform.up, ForceMode.Impulse);
         rangeCollider.enabled = true;
         yield return new WaitForSeconds(5);
+
+        //activate all holograms
+        foreach(GameObject hologram in holograms)
+        {
+            hologram.SetActive(true);
+        }
         
+        rb.constraints = RigidbodyConstraints.FreezeAll;
         StartCoroutine(Pulse());
     }
 
@@ -129,7 +140,8 @@ public class Decoy : MonoBehaviour, IItem, ISightObserver, IPhotoObserver, IInte
 
     void OnCollisionEnter(Collision collision)
     {
-        src.PlayOneShot(clank);
+        if(transform.parent == null && !isDroppped)
+            src.PlayOneShot(clank);
     }
 
     public bool IsItemInUse()
@@ -183,6 +195,7 @@ public class Decoy : MonoBehaviour, IItem, ISightObserver, IPhotoObserver, IInte
         {
             transform.parent = inventory.transform;
             isDroppped = false;
+            rb.constraints = RigidbodyConstraints.FreezeAll;
             gameObject.SetActive(false);
         }
     }

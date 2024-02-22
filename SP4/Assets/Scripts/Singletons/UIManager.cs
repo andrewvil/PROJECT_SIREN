@@ -84,7 +84,10 @@ public class UIManager : MonoBehaviour
         else if (health > 70)
             cracked.SetActive(false);
         if (health < 40)
+        {
+            PlayerAudioController.instance.PlayAudio(AUDIOSOUND.CRITICAL);
             cracked1.SetActive(true);
+        }
         else if (health > 40)
             cracked1.SetActive(false);
         if (health < 10)
@@ -172,4 +175,6 @@ public class UIManager : MonoBehaviour
         ambientAC.clip = dead;
         ambientAC.Play();
     }
+
+    
 }

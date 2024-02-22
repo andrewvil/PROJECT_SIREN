@@ -31,17 +31,25 @@ public class PlayerController : MonoBehaviour, IHealth
     [SerializeField]
     private PlayerData playerData;
 
+    [SerializeField] private Volume damageVolume;
+
     private int equippedIndex;
     private FlashlightItem flashlight;
+
+    #region adrenaline
     private Vignette vignette;
     private NightVisionPostProcess adrenalineColor;
     private LensDistortion adrenalineLens;
-
     public bool adrenalineOn;
+    #endregion
+
+    #region damagePP
+    private Bloom damageBloom;
+    #endregion
 
     void Start()
     {
-        adrenalineOn = false;
+        
         InitHealth();
         GetInventory();
 
@@ -51,12 +59,18 @@ public class PlayerController : MonoBehaviour, IHealth
             obj.SetActive(false);
         }
         inventory[equippedIndex].SetActive(true);
-
+        
+        //adrenaline PP
         vol.profile.TryGet<Vignette>(out vignette);
         vol.profile.TryGet<NightVisionPostProcess>(out adrenalineColor);
         vol.profile.TryGet<LensDistortion>(out adrenalineLens);
 
         adrenalineColor.active = false;
+        adrenalineOn = false;
+        //
+
+        //damage PP
+        damageVolume.profile.TryGet<Bloom>(out damageBloom);
     }
 
     void Update()
@@ -82,9 +96,14 @@ public class PlayerController : MonoBehaviour, IHealth
         if(canUse) {
             if(Input.GetMouseButtonDown(0))
             {
+                ItemHealth healthItemCheck = inventory[equippedIndex].GetComponent<ItemHealth>();
+                if(healthItemCheck != null)
+                {
+                    UpdateHealth(healthItemCheck.GetHealth());
+                }
+
                 inventory[equippedIndex].GetComponent<IItem>().OnPrimaryAction();
 
-                //check in case for consumable
                 if(inventory[equippedIndex].transform.parent == null)
                 {
                     GetInventory();
@@ -113,22 +132,21 @@ public class PlayerController : MonoBehaviour, IHealth
                     obj.GetComponent<IItem>()?.RunBackgroundProcesses();
             }
         }
-
-        //temporary, remove
-        // if(Input.GetKeyDown(KeyCode.H))
+        // foreach(GameObject obj in sightController.GetComponent<SightController>().GetObjectsInRange(15f))
         // {
-        //     if(adrenalineCo==null)
-        //         adrenalineCo = StartCoroutine(AdrenalineCoroutine());
-        // }
-        foreach(GameObject obj in sightController.GetComponent<SightController>().GetObjectsInRange(15f))
-        {
-            if(obj.GetComponent<EnemyBase>()!=null)
-            {
-                if(adrenalineCo==null)
-                    adrenalineCo = StartCoroutine(AdrenalineCoroutine());
-                break;
-            }
+        //     if(obj.GetComponent<EnemyBase>()!=null)
+        //     {
+        //         if(adrenalineCo==null)
+        //             adrenalineCo = StartCoroutine(AdrenalineCoroutine());
+        //         break;
+        //     }
             
+        // }
+
+        //for testing only.
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            UpdateHealth(-35);
         }
         HandleAdrenaline();
 
@@ -226,14 +244,23 @@ public class PlayerController : MonoBehaviour, IHealth
         if(GameManager.instance.bGameOver) return;
         health += amt;
         if(health > maxHealth) health = maxHealth;
+
         else if (health <= 0)
         {
             health = 0;
             PlayerAudioController.instance.PlayAudio(AUDIOSOUND.JUMPSCARE);
             Die();
+            return;
+        }
+
+        //play adrenaline
+        if(amt < 0)
+        {
+            if(adrenalineCo==null)
+                adrenalineCo = StartCoroutine(AdrenalineCoroutine());
         }
         UIManager.instance.SetCracked(health);
-
+        damageBloom.intensity.value = (maxHealth - health) / (float)maxHealth * 2f;
     }
 
     void HandleAdrenaline()
@@ -260,6 +287,15 @@ public class PlayerController : MonoBehaviour, IHealth
 
     public void Die()
     {
+        if(adrenalineCo != null)
+        {
+            adrenalineOn = false;
+            StopCoroutine(adrenalineCo);
+            adrenalineCo = null;
+            adrenalineColor.active = false;
+            cameraController.StopShake();
+        }
+
         GameManager.instance.bGameOver = true;
         model.SetActive(false);
 
@@ -277,9 +313,19 @@ public class PlayerController : MonoBehaviour, IHealth
     private IEnumerator DieCoroutine()
     {
         UIManager.instance.DisableAllPostProcessing();
-        Camera.main.transform.parent = GameManager.instance.lastHitEnemy.transform;
-        Camera.main.transform.localRotation = Quaternion.identity;
-        Camera.main.transform.localPosition = Vector3.zero;
+        damageBloom.intensity.value = 0f;
+
+        if(GameManager.instance.lastHitEnemy) {
+            Camera.main.transform.parent = GameManager.instance.lastHitEnemy.transform;
+            Camera.main.transform.localRotation = Quaternion.identity;
+            Camera.main.transform.localPosition = Vector3.zero;
+        }
+        if(heartbeatCo != null)
+        {
+            StopCoroutine(heartbeatCo);
+            heartbeatCo = null;
+        }
+        
         yield return new WaitForSeconds(1.25f);
         UIManager.instance.OnDie();
         GameManager.instance.Die();
@@ -298,6 +344,7 @@ public class PlayerController : MonoBehaviour, IHealth
         status.SetActive(true);
         inventory[equippedIndex].GetComponent<IItem>()?.OnPrimaryActionRelease();
         inventory[equippedIndex].GetComponent<IItem>()?.OnSecondaryActionRelease();
+        PlayerAudioController.instance.PlayAudio(AUDIOSOUND.SYSTEMSDOWN);
         foreach(GameObject obj in inventory)
         {
             obj.GetComponent<IItem>()?.OnEMPTrigger();
@@ -308,7 +355,7 @@ public class PlayerController : MonoBehaviour, IHealth
 
     private IEnumerator EnableElectronics()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
 
         foreach(GameObject obj in inventory)
         {

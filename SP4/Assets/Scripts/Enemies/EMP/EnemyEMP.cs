@@ -33,6 +33,12 @@ public class EnemyEMP : EnemyBase, ISightObserver, IPhotoObserver
     private Color passiveLightEmission;
     private Color angryLightEmission;
 
+    [SerializeField]
+    private AudioSource src;
+
+    [SerializeField]
+    private AudioClip empExplosionClip;
+
     private enum State
     {
         PATROL,
@@ -189,6 +195,7 @@ public class EnemyEMP : EnemyBase, ISightObserver, IPhotoObserver
     public void Blast()
     {
         Instantiate(blastPrefab, transform);
+        src.PlayOneShot(empExplosionClip);
         chargeCount++;
     }
 

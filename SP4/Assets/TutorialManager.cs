@@ -11,6 +11,8 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject tutindicator;
     [SerializeField] private Transform targetCheckpoint;
 
+    [SerializeField] private PlayerData playerData;
+
     private enum TUTORIAL
     {
         WASDMOVE,
@@ -31,8 +33,15 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tut = TUTORIAL.WASDMOVE;
-        scrollCoroutine = StartCoroutine(ScrollText("W,A,S,D - Move"));
+        if(playerData.hasLoad)
+        {
+            tut = TUTORIAL.DONE;
+        }
+        else
+        {
+            tut = TUTORIAL.WASDMOVE;
+            scrollCoroutine = StartCoroutine(ScrollText("W,A,S,D - Move"));
+        }
         tutindicator.SetActive(false);
     }
 
