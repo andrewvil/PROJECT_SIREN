@@ -33,7 +33,7 @@ public class ItemKeyCard : MonoBehaviour, IInteract, IPhotoObserver, ISightObser
 
     public void OnPhotoTaken()
     {
-        UIManager.instance.DisplayTip("Level 3 Access Keycard", "Access more of the facility.", true);
+        UIManager.instance.DisplayTip("Level " + accessLevel + " Access Keycard", "Access more of the facility.", true);
     }
 
     public void OnSighted()
