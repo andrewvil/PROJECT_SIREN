@@ -32,6 +32,9 @@ public abstract class EnemyBase : MonoBehaviour
     //Attack
     public virtual void AttackPlayer()
     {
+        if (!allowAttack)
+            return;
+
         target.GetComponent<IHealth>().UpdateHealth(-damage);
         Debug.Log("hit");
         allowAttack = false;
