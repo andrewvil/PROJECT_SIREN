@@ -6448,6 +6448,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 639103012040262092, guid: 88b90470468076f4384e5876ea1cba9a,
         type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 639103012040262092, guid: 88b90470468076f4384e5876ea1cba9a,
+        type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
@@ -58632,7 +58637,7 @@ PrefabInstance:
     - target: {fileID: 8339542860423763863, guid: ec683c90326ecba4298e5250923b6c55,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8339542860423763863, guid: ec683c90326ecba4298e5250923b6c55,
         type: 3}
@@ -94561,8 +94566,8 @@ Transform:
   - {fileID: 1068745145}
   - {fileID: 320819391}
   - {fileID: 808500182}
-  - {fileID: 322931861}
   - {fileID: 1369420775}
+  - {fileID: 322931861}
   m_Father: {fileID: 1766111039}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
