@@ -98,6 +98,10 @@ public class GameManager : MonoBehaviour
         playerData.lastCheckpoint = currCheckpoint;
         playerData.lastAccessLevel = accessLevel;
         playerData.health = player.GetComponent<IHealth>().GetHealth();
+        if (!playerData.hasLoad)
+        {
+            playerData.hasLoad = true;
+        }
         playerData.SaveData();
     }
 
