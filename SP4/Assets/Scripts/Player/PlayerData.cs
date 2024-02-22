@@ -12,7 +12,9 @@ public class PlayerData : ScriptableObject
     public List<string> discoveryIndex;
     public List<int> floorIds;
     public List<int> floorLayers;
-
+    public List<int> doorIds;
+    public List<int> doorLayers;
+    public bool hasLoad;
     public void SaveData()
     {
         string s = JsonUtility.ToJson(this);
@@ -27,5 +29,19 @@ public class PlayerData : ScriptableObject
         {
             JsonUtility.FromJsonOverwrite(s, this);
         }
+    }
+
+    public void ResetData()
+    {
+        inventoryIds.Clear();
+        discoveryIndex.Clear();
+        floorIds.Clear();
+        floorLayers.Clear();
+        doorIds.Clear();
+        doorLayers.Clear();
+        lastCheckpoint = 0;
+        health = 100;
+        lastAccessLevel = 0;
+        hasLoad = false;
     }
 }
