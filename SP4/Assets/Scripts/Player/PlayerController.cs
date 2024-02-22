@@ -28,7 +28,8 @@ public class PlayerController : MonoBehaviour, IHealth
     [SerializeField]
     private GameObject status;
 
-
+    [SerializeField]
+    private PlayerData playerData;
 
     private int equippedIndex;
     private FlashlightItem flashlight;
@@ -175,11 +176,14 @@ public class PlayerController : MonoBehaviour, IHealth
     public void GetInventory()
     {
         inventory.Clear();
+        playerData.inventoryIds.Clear();
         //get inventory
         foreach(Transform child in inventoryObject.transform)
         {
-            child.GetComponent<IItem>().GetRequiredControllers(gameObject, sightController);
+            IItem item = child.GetComponent<IItem>();
+            item.GetRequiredControllers(gameObject, sightController);
             inventory.Add(child.gameObject);
+            playerData.inventoryIds.Add(item.GetItemID());
 
             FlashlightItem fs = child.GetComponent<FlashlightItem>();
             if(fs!=null) flashlight=fs;
