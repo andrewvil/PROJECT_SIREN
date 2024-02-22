@@ -1181,7 +1181,7 @@ MonoBehaviour:
   target: {fileID: 0}
   jumpscareCamTransform: {fileID: 2135956675}
   player: {fileID: 0}
-  walkSpeed: 2
+  walkSpeed: 3
   chaseSpeed: 10
   blastPrefab: {fileID: 6513280465763565316, guid: 4b3f19a41600ad54e8265ba712a0dae0,
     type: 3}

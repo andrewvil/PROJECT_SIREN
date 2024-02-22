@@ -1970,7 +1970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolWaypoints: []
   damage: 999
-  speed: 25
+  speed: 50
   target: {fileID: 0}
   modelObject: {fileID: 1169346834745043860}
   rageBuildUp: 25
