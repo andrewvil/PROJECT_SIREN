@@ -64797,7 +64797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkpoints: []
-  playerData: {fileID: 0}
+  playerData: {fileID: 11400000, guid: d061a9330cde5da4faae4d3045decfc9, type: 2}
 --- !u!4 &1526934479
 Transform:
   m_ObjectHideFlags: 0
