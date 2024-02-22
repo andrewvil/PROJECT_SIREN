@@ -392,6 +392,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objToDrop: {fileID: 8339542860213372426}
-  timeToFall: 0.5
+  timeToFall: 0.3
   indicator: {fileID: 4027957817452880616}
   timeBetweenFlash: 0.1
