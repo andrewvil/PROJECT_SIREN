@@ -26,6 +26,11 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private Image nvFill;
 
+    
+    [SerializeField] private GameObject cracked;
+    [SerializeField] private GameObject cracked1;
+    [SerializeField] private GameObject cracked2;
+
     [Header("Audio")]
     [SerializeField] private AudioSource ambientAC;
     [SerializeField] private AudioClip dead;
@@ -70,6 +75,22 @@ public class UIManager : MonoBehaviour
                 fadeCoroutine = null;
             }
         }
+    }
+
+    public void SetCracked(int health)
+    {
+        if (health < 70)
+            cracked.SetActive(true);
+        if (health > 70)
+            cracked.SetActive(false);
+        if (health < 40)
+            cracked.SetActive(true);
+        else if (health > 40)
+            cracked.SetActive(false);
+        if (health < 10)
+            cracked.SetActive(true);
+        else if (health > 10)
+            cracked.SetActive(false);
     }
 
     public void SetStaminaAlpha(float lerpval)

@@ -50,7 +50,7 @@ Shader "Custom/UIGlitchShader"
                 // i.uv.x = (int)(i.uv.x * _QuantizeValue) / _QuantizeValue;
                 // i.uv.y = (int)(i.uv.y * _QuantizeValue) / _QuantizeValue;
                 // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
+                float4 col = tex2D(_MainTex, i.uv);
 
                 col.r = (int)(col.r * _QuantizeValue)/_QuantizeValue;
                 col.g = (int)(col.g * _QuantizeValue)/_QuantizeValue;

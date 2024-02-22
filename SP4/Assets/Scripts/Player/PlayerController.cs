@@ -232,6 +232,8 @@ public class PlayerController : MonoBehaviour, IHealth
             PlayerAudioController.instance.PlayAudio(AUDIOSOUND.JUMPSCARE);
             Die();
         }
+        UIManager.instance.SetCracked(health);
+
     }
 
     void HandleAdrenaline()
