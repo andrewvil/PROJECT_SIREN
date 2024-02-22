@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Decoy : MonoBehaviour, IItem, ISightObserver, IPhotoObserver
+public class Decoy : MonoBehaviour, IItem, ISightObserver, IPhotoObserver, IInteract
 {
     [SerializeField]
     private List<GameObject> objectsInRange;
@@ -21,6 +22,17 @@ public class Decoy : MonoBehaviour, IItem, ISightObserver, IPhotoObserver
 
     [SerializeField]
     private AudioClip equip;
+
+    [SerializeField]
+    private Collider rangeCollider;
+
+    bool isDroppped;
+
+    void Awake()
+    {
+        isDroppped = true;
+        rangeCollider.enabled = false;
+    }
 
     void OnEnable()
     {
@@ -65,7 +77,7 @@ public class Decoy : MonoBehaviour, IItem, ISightObserver, IPhotoObserver
     void Update()
     {
         if(GameManager.instance.bGameOver) return;
-        if(transform.parent != null)
+        if(transform.parent != null && !isDroppped)
             transform.position = Vector3.Lerp(transform.position, Camera.main.transform.position + (Camera.main.transform.forward + (Camera.main.transform.right - Camera.main.transform.up) * 0.5f) * 0.5f, Time.deltaTime * 25f);
     }
 
@@ -75,8 +87,9 @@ public class Decoy : MonoBehaviour, IItem, ISightObserver, IPhotoObserver
         rb.constraints = RigidbodyConstraints.None;
         transform.parent = null;
         rb.AddForce(Camera.main.transform.forward * 15f + Camera.main.transform.up, ForceMode.Impulse);
-
+        rangeCollider.enabled = true;
         yield return new WaitForSeconds(5);
+        
         StartCoroutine(Pulse());
     }
 
@@ -144,12 +157,38 @@ public class Decoy : MonoBehaviour, IItem, ISightObserver, IPhotoObserver
 
     public void OnEMPTrigger()
     {
-        if(transform.parent == null)
+        if(transform.parent == null && !isDroppped)
             Destroy(gameObject);
     }
 
     public void OnEMPOff()
     {
         
+    }
+
+    public string GetItemName()
+    {
+        return "Decoy grenade";
+    }
+
+    public void OnHover()
+    {
+        if(isDroppped)
+            UIManager.instance.OnHover("[E] Pick up");
+    }
+
+    public void OnInteract(GameObject inventory)
+    {
+        if(isDroppped)
+        {
+            transform.parent = inventory.transform;
+            isDroppped = false;
+            gameObject.SetActive(false);
+        }
+    }
+
+    public string GetDetails()
+    {
+        return "Decoy grenade";
     }
 }

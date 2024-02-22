@@ -7,6 +7,9 @@ public class InteractController : MonoBehaviour
     [SerializeField] private GameObject inventory;
     private GameObject prev;
 
+    [SerializeField]
+    private PlayerController pc;
+
     private void Update()
     {
         RaycastHit hit;
@@ -25,6 +28,7 @@ public class InteractController : MonoBehaviour
                     hit.transform.GetComponent<IInteract>().OnInteract(inventory);
                     if (hit.transform.GetComponent<ItemHealth>() != null)
                         GetComponent<PlayerController>().UpdateHealth(hit.transform.GetComponent<ItemHealth>().health);
+                    pc.GetInventory();
                 }
             }
         }

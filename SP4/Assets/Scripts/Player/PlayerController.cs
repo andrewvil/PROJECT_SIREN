@@ -113,11 +113,12 @@ public class PlayerController : MonoBehaviour, IHealth
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            if(adrenalineCo==null)
-                adrenalineCo = StartCoroutine(AdrenalineCoroutine());
-        }
+        //temporary, remove
+        // if(Input.GetKeyDown(KeyCode.H))
+        // {
+        //     if(adrenalineCo==null)
+        //         adrenalineCo = StartCoroutine(AdrenalineCoroutine());
+        // }
         foreach(GameObject obj in sightController.GetComponent<SightController>().GetObjectsInRange(15f))
         {
             if(obj.GetComponent<EnemyBase>()!=null)
@@ -171,7 +172,7 @@ public class PlayerController : MonoBehaviour, IHealth
         heartbeatCo = StartCoroutine(HeartbeatCoroutine());
     }
 
-    void GetInventory()
+    public void GetInventory()
     {
         inventory.Clear();
         //get inventory
@@ -253,7 +254,6 @@ public class PlayerController : MonoBehaviour, IHealth
 
     public void Die()
     {
-        GameManager.instance.DisableMap();
         GameManager.instance.bGameOver = true;
         model.SetActive(false);
 

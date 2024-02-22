@@ -115,7 +115,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image deathImage;
     [SerializeField] private Image skullImage;
     [SerializeField] private GameObject deathButtons;
-    [SerializeField] private GameObject map;
 
     public void Die()
     {
@@ -124,11 +123,6 @@ public class GameManager : MonoBehaviour
         skullImage.material.SetFloat("_Effect", 0f);
         deathScreen.SetActive(true);
         StartCoroutine(FadeDeathScreen());
-    }
-
-    public void DisableMap()
-    {
-        map.SetActive(false);
     }
 
     private IEnumerator FadeDeathScreen()

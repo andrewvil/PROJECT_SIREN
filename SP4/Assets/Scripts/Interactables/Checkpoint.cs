@@ -30,6 +30,11 @@ public class Checkpoint : MonoBehaviour, ISightObserver, IPhotoObserver
         GameManager.instance.checkpt = this;
         src.PlayOneShot(saveSfx);
         checkpointActive = true;
+
+        if(TutorialManager.instance)
+        {
+            TutorialManager.instance.picDone = true;
+        }
     }
 
     void Update()

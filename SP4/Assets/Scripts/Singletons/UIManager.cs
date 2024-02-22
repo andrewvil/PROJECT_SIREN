@@ -26,8 +26,11 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private Image nvFill;
 
+    [Header("Audio")]
     [SerializeField] private AudioSource ambientAC;
     [SerializeField] private AudioClip dead;
+
+    
 
     private void Awake()
     {

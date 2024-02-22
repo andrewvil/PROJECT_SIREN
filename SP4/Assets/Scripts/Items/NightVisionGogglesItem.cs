@@ -23,6 +23,8 @@ public class NightVisionGogglesItem : MonoBehaviour, IItem
     [SerializeField] private AudioClip offSfx;
     [SerializeField] private AudioClip equipSfx;
 
+    [SerializeField] private Light NVLight;
+
     private bool isOn;
     private GameObject spawnedEnemy;
     public float temperature;
@@ -96,6 +98,7 @@ public class NightVisionGogglesItem : MonoBehaviour, IItem
                 ld.active = true;
             }
             NVScanner.SetActive(true);
+            NVLight.enabled = true;
             UIManager.instance.ToggleNightVisionUI();
             if (RandomNVEnemy())
             {
@@ -128,6 +131,7 @@ public class NightVisionGogglesItem : MonoBehaviour, IItem
             }
             model.SetActive(true);
             NVScanner.SetActive(false);
+            NVLight.enabled = false;
             UIManager.instance.ToggleNightVisionUI();
             isOn = false;
             GameManager.instance.nvIsOn = isOn;

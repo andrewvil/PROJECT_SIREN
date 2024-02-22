@@ -124,7 +124,7 @@ public class LevelDoor : MonoBehaviour, IInteract, IPhotoObserver, ISightObserve
 
     public string GetDetails()
     {
-        return ".";
+        return "Door";
     }
 
     public void SetDoorLayer(int layer)

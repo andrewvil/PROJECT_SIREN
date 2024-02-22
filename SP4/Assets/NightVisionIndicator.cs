@@ -48,12 +48,13 @@ public class NightVisionIndicator : MonoBehaviour
                 indicators.RemoveAt(i);
                 continue;
             }
-            
+
             TMP_Text inddetails = indicators[i].GetComponentInChildren<TMP_Text>();
             if(inddetails.text != targets[i].GetComponent<ISightObserver>().GetDetails())
             {
                 inddetails.text = targets[i].GetComponent<ISightObserver>().GetDetails();
                 inddetails.color = targets[i].GetComponent<EnemyBase>()?Color.red:Color.white;
+                PlayerAudioController.instance.PlayAudio(AUDIOSOUND.SCROLL);
             }
 
             Vector3 targetPos = Camera.main.WorldToScreenPoint(targets[i].transform.position);
