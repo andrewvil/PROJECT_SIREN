@@ -10,8 +10,12 @@ public class SceneSwitcher : MonoBehaviour
         switch(scene)
         {
             case 0:
-                SceneManager.LoadScene("DemoScene");
+                GameManager.instance.NewGame();
+                break;
+            case 1:
+                GameManager.instance.Load();
                 break;
         }
+        SceneManager.LoadScene("DemoScene");
     }
 }

@@ -66,12 +66,14 @@ public class GameManager : MonoBehaviour
 
     public void Save()
     {
+        //Inventory
         inventoryIds.Clear();
         foreach(GameObject obj in inventoryObject)
         {
             inventoryIds.Add(obj.GetComponent<IItem>().GetItemID());
         }
 
+        //Floors
         playerData.floorIds.Clear();
         playerData.floorLayers.Clear();
         GameObject[] floors = GameObject.FindGameObjectsWithTag("Floor");
@@ -81,11 +83,25 @@ public class GameManager : MonoBehaviour
             playerData.floorLayers.Add(floor.layer);
         }
 
+        //Doors
+        playerData.doorIds.Clear();
+        playerData.doorLayers.Clear();
+        GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
+        foreach (GameObject door in doors)
+        {
+            playerData.doorIds.Add(door.GetInstanceID());
+            playerData.doorLayers.Add(door.layer);
+        }
+
         //Saving player data
         playerData.inventoryIds = inventoryIds;
         playerData.lastCheckpoint = currCheckpoint;
         playerData.lastAccessLevel = accessLevel;
         playerData.health = player.GetComponent<IHealth>().GetHealth();
+        if (!playerData.hasLoad)
+        {
+            playerData.hasLoad = true;
+        }
         playerData.SaveData();
     }
 
@@ -105,6 +121,24 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
+        for (int i = 0; i < playerData.doorIds.Count; i++)
+        {
+            for (int j = 0; j < playerData.doorIds.Count; j++)
+            {
+                if (doors[i].GetInstanceID() == playerData.doorIds[j])
+                {
+                    doors[i].layer = playerData.doorLayers[j];
+                    continue;
+                }
+            }
+        }
+    }
+
+    public void NewGame()
+    {
+        playerData.ResetData();
     }
 
     public void OnCheckpointChanged()
