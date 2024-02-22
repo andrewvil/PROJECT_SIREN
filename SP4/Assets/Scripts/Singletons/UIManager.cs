@@ -81,16 +81,16 @@ public class UIManager : MonoBehaviour
     {
         if (health < 70)
             cracked.SetActive(true);
-        if (health > 70)
+        else if (health > 70)
             cracked.SetActive(false);
         if (health < 40)
-            cracked.SetActive(true);
+            cracked1.SetActive(true);
         else if (health > 40)
-            cracked.SetActive(false);
+            cracked1.SetActive(false);
         if (health < 10)
-            cracked.SetActive(true);
+            cracked2.SetActive(true);
         else if (health > 10)
-            cracked.SetActive(false);
+            cracked2.SetActive(false);
     }
 
     public void SetStaminaAlpha(float lerpval)
