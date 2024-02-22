@@ -5,15 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour
 {
+    [SerializeField]
+    private PlayerData playerData;
     public void SceneSwitch(int scene)
     {
         switch(scene)
         {
             case 0:
-                GameManager.instance.NewGame();
+                playerData.ResetData();
                 break;
             case 1:
-                GameManager.instance.Load();
+                playerData.LoadData();
                 break;
         }
         SceneManager.LoadScene("DemoScene");

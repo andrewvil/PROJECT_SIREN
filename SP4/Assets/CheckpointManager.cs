@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CheckpointManager : MonoBehaviour
 {
-    public static CheckpointManager instance;
-
     [SerializeField]
     private List<Checkpoint> checkpoints;
 
@@ -24,6 +22,7 @@ public class CheckpointManager : MonoBehaviour
         foreach(Checkpoint obj in GetComponentsInChildren<Checkpoint>())
         {
             checkpoints.Add(obj);
+            obj.GetComponent<Checkpoint>().cmp = this;
         }
     }
 

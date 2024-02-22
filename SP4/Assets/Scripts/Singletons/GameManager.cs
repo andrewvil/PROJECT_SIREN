@@ -107,7 +107,10 @@ public class GameManager : MonoBehaviour
 
     public void Load()
     {
-        playerData.LoadData();
+        if (!playerData.hasLoad)
+        {
+            return;
+        }
 
         GameObject[] floors = GameObject.FindGameObjectsWithTag("Floor");
         for (int i = 0; i < playerData.floorIds.Count; i++)
@@ -134,11 +137,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void NewGame()
-    {
-        playerData.ResetData();
     }
 
     public void OnCheckpointChanged()
