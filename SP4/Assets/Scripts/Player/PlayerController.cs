@@ -25,7 +25,11 @@ public class PlayerController : MonoBehaviour, IHealth
     [SerializeField]
     private Volume vol;
 
-    
+    [SerializeField]
+    private GameObject status;
+
+
+
     private int equippedIndex;
     private FlashlightItem flashlight;
     private Vignette vignette;
@@ -285,6 +289,7 @@ public class PlayerController : MonoBehaviour, IHealth
     public void DisableEquipment()
     {
         canUse = false;
+        status.SetActive(true);
         inventory[equippedIndex].GetComponent<IItem>()?.OnPrimaryActionRelease();
         inventory[equippedIndex].GetComponent<IItem>()?.OnSecondaryActionRelease();
         foreach(GameObject obj in inventory)
@@ -303,6 +308,7 @@ public class PlayerController : MonoBehaviour, IHealth
         {
             obj.GetComponent<IItem>()?.OnEMPOff();
         }
+        status.SetActive(false);
         canUse = true;
     }
 

@@ -1185,7 +1185,7 @@ MonoBehaviour:
   chaseSpeed: 10
   blastPrefab: {fileID: 6513280465763565316, guid: 4b3f19a41600ad54e8265ba712a0dae0,
     type: 3}
-  patrolTimerSet: 20
+  patrolTimerSet: 30
   restTimerSet: 50
   timer: 0
   active: 1

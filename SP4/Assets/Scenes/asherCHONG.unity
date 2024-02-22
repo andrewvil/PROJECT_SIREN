@@ -22753,6 +22753,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Starer
       objectReference: {fileID: 0}
+    - target: {fileID: 3506748300407416653, guid: bc373946a33fce644828cb0da85bb5ea,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3506748300407416654, guid: bc373946a33fce644828cb0da85bb5ea,
         type: 3}
       propertyPath: m_RootOrder
@@ -31472,6 +31477,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Starer (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3506748300407416653, guid: bc373946a33fce644828cb0da85bb5ea,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3506748300407416654, guid: bc373946a33fce644828cb0da85bb5ea,
         type: 3}
@@ -44452,6 +44462,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Starer (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3506748300407416653, guid: bc373946a33fce644828cb0da85bb5ea,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3506748300407416654, guid: bc373946a33fce644828cb0da85bb5ea,
         type: 3}
@@ -59479,7 +59494,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1836348362
@@ -72292,6 +72307,7 @@ MonoBehaviour:
   model: {fileID: 1308474521}
   cameraController: {fileID: 4594004020890458887}
   vol: {fileID: 1307314194}
+  status: {fileID: 1836348358}
   adrenalineOn: 0
   maxHealth: 100
 --- !u!114 &4594004020890458887
