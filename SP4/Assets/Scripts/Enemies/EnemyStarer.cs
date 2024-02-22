@@ -32,7 +32,6 @@ public class EnemyStarer : EnemyBase, ISightObserver, IPhotoObserver
     // Start is called before the first frame update
     void Start()
     {
-        damage = 20;
         speed = walkSpeed;
         isSeen = playerSpotted = false;
         agent = GetComponent<NavMeshAgent>();

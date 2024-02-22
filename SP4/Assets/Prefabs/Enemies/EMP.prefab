@@ -1171,12 +1171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4d180375c117043b4739c9eb01162f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolWaypoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  damage: 0
+  patrolWaypoints: []
+  damage: 50
   speed: 0
   target: {fileID: 0}
   jumpscareCamTransform: {fileID: 2135956675}

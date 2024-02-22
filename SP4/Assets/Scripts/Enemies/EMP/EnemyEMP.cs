@@ -47,8 +47,6 @@ public class EnemyEMP : EnemyBase, ISightObserver, IPhotoObserver
     // Start is called before the first frame update
     void Start()
     {
-        damage = 50;
-
         timer = patrolTimerSet;
 
         speed = walkSpeed;
