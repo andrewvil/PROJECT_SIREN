@@ -8,6 +8,9 @@ public class FallingLightbulb : MonoBehaviour
     [SerializeField] private LayerMask hitLayer;
     [SerializeField] private int damage;
 
+    [SerializeField] private AudioSource src;
+    [SerializeField] private AudioClip hitClip;
+
     private bool triggered = false;
 
     private void OnCollisionEnter(Collision collision)
@@ -24,6 +27,7 @@ public class FallingLightbulb : MonoBehaviour
                 }
             }
             triggered = true;
+            src.PlayOneShot(hitClip);
         }
     }
 }

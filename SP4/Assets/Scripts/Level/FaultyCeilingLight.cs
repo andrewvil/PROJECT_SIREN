@@ -15,6 +15,9 @@ public class FaultyCeilingLight : MonoBehaviour
     private float flashTimeElapsed = 0f;
     private bool lightActive = true;
 
+    [SerializeField] private AudioSource src;
+    [SerializeField] private AudioClip snap;
+
     private void Start()
     {
         indicator.SetActive(lightActive);
@@ -42,6 +45,7 @@ public class FaultyCeilingLight : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             // Play short circuit SFX
+            src.PlayOneShot(snap);
             triggered = true;
             lightActive = false;
             indicator.SetActive(lightActive);

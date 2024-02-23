@@ -5,9 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     float mouseX, mouseY;
-
-    [SerializeField]
-    private float mouseSensitivity = 1f;
+    public float mouseSensitivity = 1f;
 
     [SerializeField] private float timeBetweenShakes;
     [SerializeField] private float shakeMagnitude;
