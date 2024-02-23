@@ -57,12 +57,6 @@ public class MovementController : MonoBehaviour
         HandleCrouching();
         HandlePlayerMovement();
 
-        if(!GameManager.instance.isInUI) {
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                Jump();
-            }
-        }
         HandleGravity();
 
         UIManager.instance.SetStaminaLength(stamina / maxStamina);
@@ -86,15 +80,6 @@ public class MovementController : MonoBehaviour
         else
         {
             fallVelocity = new Vector3(0f,-1f,0f);
-        }
-    }
-
-    private void Jump()
-    {
-        if(!isFalling)
-        {
-            isFalling = true;
-            fallVelocity = new Vector3(0f,8f,0f);
         }
     }
 
