@@ -70,6 +70,8 @@ public enum AUDIOSOUND
     GLASS3 = 22,
     DIE = 23,
 
+    SIREN = 24
+
 
     //more to add
 }

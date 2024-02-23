@@ -14,13 +14,16 @@ public class SettingsManager : MonoBehaviour
 
     [SerializeField] private Volume volume;
     [SerializeField] private Slider brightSlider;
+    [SerializeField] private Slider mouseSlider;
+    [SerializeField] private CameraController cc;
 
-    private void Start()
+    private void Awake()
     {
         masterSlider.value = PlayerPrefsManager.Load("MasterVolume");
         sfxSlider.value = PlayerPrefsManager.Load("SFXVolume");
         bgmSlider.value = PlayerPrefsManager.Load("BGMVolume");
         brightSlider.value = PlayerPrefsManager.Load("BrightVolume");
+        mouseSlider.value = PlayerPrefsManager.Load("MouseSensitivity");
     }
     public void SetMasterVolume()
     {
@@ -44,5 +47,11 @@ public class SettingsManager : MonoBehaviour
             bright.brightness.value = brightSlider.value;
             PlayerPrefsManager.Save("BrightVolume", brightSlider.value);
         }
+    }
+
+    public void SetMouseSense()
+    {
+        cc.mouseSensitivity = mouseSlider.value;
+        PlayerPrefsManager.Save("MouseSensitivity", mouseSlider.value);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour
@@ -9,6 +10,7 @@ public class SceneSwitcher : MonoBehaviour
     private PlayerData playerData;
     public void SceneSwitch(int scene)
     {
+        volume.enabled = false;
         switch(scene)
         {
             case 0:
@@ -21,6 +23,9 @@ public class SceneSwitcher : MonoBehaviour
                 Application.Quit();
                 break;
         }
+        
         SceneManager.LoadScene("DemoScene");
     }
+
+    [SerializeField] private Volume volume;
 }

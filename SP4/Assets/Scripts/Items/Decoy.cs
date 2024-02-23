@@ -197,6 +197,7 @@ public class Decoy : MonoBehaviour, IItem, ISightObserver, IPhotoObserver, IInte
             isDroppped = false;
             rb.constraints = RigidbodyConstraints.FreezeAll;
             PlayerAudioController.instance.PlayAudio(AUDIOSOUND.DECOYEQUIP);
+            gameObject.layer = 2;
             gameObject.SetActive(false);
         }
     }

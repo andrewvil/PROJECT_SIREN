@@ -48,6 +48,7 @@ public class ItemHealth : MonoBehaviour, IInteract, IPhotoObserver, ISightObserv
         transform.parent = inventory.transform;
         rb.constraints = RigidbodyConstraints.FreezeAll;
         PlayerAudioController.instance.PlayAudio(AUDIOSOUND.MEDKIT);
+        gameObject.layer = 2;
         gameObject.SetActive(false);   
     }
 

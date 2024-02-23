@@ -78,6 +78,10 @@ public class PlayerController : MonoBehaviour, IHealth
                 }
             }
         }
+        else
+        {
+            PlayerAudioController.instance.PlayAudio(AUDIOSOUND.SIREN);
+        }
         godmode = false;
         InitHealth();
         GetInventory();
