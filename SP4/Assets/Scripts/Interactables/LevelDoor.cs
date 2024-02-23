@@ -143,5 +143,6 @@ public class LevelDoor : MonoBehaviour, IInteract, IPhotoObserver, ISightObserve
         gameObject.layer = layer;
         door.gameObject.layer = layer;
         doorIndicator.layer = layer;
+        doorIndicator.GetComponent<Renderer>().material.SetColor("_BaseColor", Color.red);
     }
 }
