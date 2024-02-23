@@ -12,10 +12,13 @@ public class NightVisionGogglesItem : MonoBehaviour, IItem
 
     [Header("Night Vision Enemy")]
     [SerializeField] private GameObject nvEnemyPrefab;
-    [SerializeField] private float spawnChance;
+    [SerializeField] private float baseSpawnChance;
     [SerializeField] private float distanceFromPlayer;
     [SerializeField] private float distanceDeviation;
     [SerializeField] private LayerMask spawnLayer;
+    [SerializeField] private float spawnChanceIncrease;
+    [SerializeField] private float timeBetweenSpawnChanceIncrease;
+    [SerializeField] private float maxSpawnChance;
 
     [Header("Audio")]
     [SerializeField] private AudioSource src;
@@ -27,6 +30,8 @@ public class NightVisionGogglesItem : MonoBehaviour, IItem
 
     private bool isOn;
     private GameObject spawnedEnemy;
+    private float spawnChance;
+    private float spawnChanceTimer;
     public float temperature;
     private Coroutine toggleCoroutine;
 
@@ -35,12 +40,19 @@ public class NightVisionGogglesItem : MonoBehaviour, IItem
         src.PlayOneShot(equipSfx);
     }
 
+    void OnDisable()
+    {
+        spawnChance = baseSpawnChance;
+    }
+
     void Start()
     {
         fTime_elapsed = 2f;
         isOn = false;
         GameManager.instance.nvIsOn = isOn;
         temperature = 49.0f;
+        spawnChance = baseSpawnChance;
+        spawnChanceTimer = timeBetweenSpawnChanceIncrease;
     }
 
     public int GetItemID()
@@ -188,6 +200,23 @@ public class NightVisionGogglesItem : MonoBehaviour, IItem
             transform.position = Vector3.Lerp(transform.position, Camera.main.transform.position, Time.deltaTime * 5f);
         else
             transform.position = Vector3.Lerp(transform.position, Camera.main.transform.position + (Camera.main.transform.forward + (Camera.main.transform.right - Camera.main.transform.up) * 0.5f) * 0.5f, Time.deltaTime * 15f);
+
+        if (isOn)
+        {
+            if (spawnChance != maxSpawnChance)
+                spawnChanceTimer -= Time.deltaTime;
+            if (spawnChanceTimer <= 0f)
+            {
+                if (spawnChance < maxSpawnChance)
+                {
+                    spawnChance += spawnChanceIncrease;
+                    if (spawnChance > maxSpawnChance)
+                        spawnChance = maxSpawnChance;
+                }
+
+                spawnChanceTimer = timeBetweenSpawnChanceIncrease;
+            }
+        }
     }
 
     public bool IsItemInUse()

@@ -103,12 +103,12 @@ public class Turret : EnemyBase
         }
         else if (currState == State.SCANNING)
         {
-            Vector3 rot = Vector3.Slerp(transform.rotation.eulerAngles, targetRotation, rotationSpeed * 0.1f);
-            transform.rotation = Quaternion.Euler(rot);
+            Vector3 rot = Vector3.Slerp(transform.localRotation.eulerAngles, targetRotation, rotationSpeed * 0.1f);
+            transform.localRotation = Quaternion.Euler(rot);
 
             if (targetSpotted)
                 ChangeState(State.TARGETSPOTTED);
-            else if (transform.rotation == Quaternion.Euler(targetRotation))
+            else if (transform.localRotation == Quaternion.Euler(targetRotation))
                 ChangeState(State.IDLE);
         }
         else if (currState == State.TARGETSPOTTED)

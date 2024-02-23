@@ -41,6 +41,7 @@ public class FaultyCeilingLight : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            // Play short circuit SFX
             triggered = true;
             lightActive = false;
             indicator.SetActive(lightActive);
