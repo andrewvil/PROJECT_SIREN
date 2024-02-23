@@ -181,6 +181,7 @@ public class GameManager : MonoBehaviour
 
     public void Escape()
     {
+        Cursor.lockState = CursorLockMode.None;
         winScreen.SetActive(true);
         isInUI = true;
         bGameOver = true;
