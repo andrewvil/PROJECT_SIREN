@@ -13,7 +13,7 @@ public class TutorialManager : MonoBehaviour
 
     [SerializeField] private PlayerData playerData;
 
-    private enum TUTORIAL
+    public enum TUTORIAL
     {
         WASDMOVE,
         MOUSELOOK,
@@ -22,7 +22,7 @@ public class TutorialManager : MonoBehaviour
         DONE
     }
 
-    private TUTORIAL tut;
+    public TUTORIAL tut;
 
     void Awake()
     {
