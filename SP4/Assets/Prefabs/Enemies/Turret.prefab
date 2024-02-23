@@ -335,6 +335,7 @@ GameObject:
   - component: {fileID: 4747968152955371896}
   - component: {fileID: 4747968152955371894}
   - component: {fileID: 4747968152955371897}
+  - component: {fileID: 2419882784260897085}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -357,7 +358,6 @@ Transform:
   - {fileID: 4747968152750696012}
   - {fileID: 4747968153875700517}
   - {fileID: 4747968152600582431}
-  - {fileID: 4747968154201138007}
   - {fileID: 4747968154124224892}
   m_Father: {fileID: 4747968153618113027}
   m_RootOrder: 1
@@ -380,13 +380,14 @@ MonoBehaviour:
   target: {fileID: 0}
   firePoint: {fileID: 4747968154177225026}
   warningLight: {fileID: 4747968154124224895}
-  deathCam: {fileID: 4747968154201138006}
   idleTime: 1
   rotationDest1: {x: 0, y: 120, z: 0}
   rotationDest2: {x: 0, y: 0, z: 0}
   rotationSpeed: 0.5
   windUpTime: 1
   rateOfFire: 5
+  windUpSFX: {fileID: 8300000, guid: 24996173aca97bd45ab8ef59f0704f80, type: 3}
+  fireSFX: {fileID: 8300000, guid: f801ba3b8f5404445927cc27d1839d0a, type: 3}
 --- !u!136 &4747968152955371897
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -401,6 +402,102 @@ CapsuleCollider:
   m_Height: 14
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 7}
+--- !u!82 &2419882784260897085
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4747968152955371899}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4747968153071867889
 GameObject:
   m_ObjectHideFlags: 0
@@ -1066,7 +1163,7 @@ Transform:
   m_Children:
   - {fileID: 4747968153756898918}
   m_Father: {fileID: 4747968152955371896}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &4747968154124224890
 Light:
@@ -1217,37 +1314,6 @@ Transform:
   - {fileID: 4747968154216862266}
   m_Father: {fileID: 4747968153618113027}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4747968154201138006
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4747968154201138007}
-  m_Layer: 0
-  m_Name: DeathCam
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4747968154201138007
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4747968154201138006}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.27, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4747968152955371896}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4747968154216862269
 GameObject:

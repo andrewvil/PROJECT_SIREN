@@ -6,13 +6,15 @@ public class Turret : EnemyBase
 {
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject warningLight;
-    [SerializeField] private GameObject deathCam;
     [SerializeField] private float idleTime;
     [SerializeField] private Vector3 rotationDest1;
     [SerializeField] private Vector3 rotationDest2;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float windUpTime;
     [SerializeField] private float rateOfFire;
+
+    [SerializeField] private AudioClip windUpSFX;
+    [SerializeField] private AudioClip fireSFX;
 
     private enum State
     {
@@ -22,6 +24,7 @@ public class Turret : EnemyBase
         SHOOT,
     }
 
+    private AudioSource src;
     private State currState;
     private bool targetSpotted = false;
     private float idleTimer;
@@ -32,6 +35,8 @@ public class Turret : EnemyBase
 
     private void Start()
     {
+        src = GetComponent<AudioSource>();
+
         timeBetweenShots = 1 / rateOfFire;
         targetRotation = rotationDest2;
 
@@ -61,6 +66,7 @@ public class Turret : EnemyBase
         {
             warningLight.SetActive(true);
             windUpTimer = windUpTime;
+            src.PlayOneShot(windUpSFX);
         }
         else if (newState == State.SHOOT)
         {
@@ -126,8 +132,8 @@ public class Turret : EnemyBase
             shootTimer -= Time.deltaTime;
             if (shootTimer <= 0)
             {
-                GameManager.instance.lastHitEnemy = deathCam;
                 AttackPlayer();
+                src.PlayOneShot(fireSFX);
                 shootTimer = timeBetweenShots;
             }
             else if (!targetSpotted)
