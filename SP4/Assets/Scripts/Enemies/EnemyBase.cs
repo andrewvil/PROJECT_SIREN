@@ -38,7 +38,7 @@ public abstract class EnemyBase : MonoBehaviour
         target.GetComponent<IHealth>().UpdateHealth(-damage);
         Debug.Log("hit");
         allowAttack = false;
-        Invoke(nameof(ReadyToAttack), 1.0f);
+        Invoke("ReadyToAttack", 1.0f);
     }
     public void ReadyToAttack()
     {

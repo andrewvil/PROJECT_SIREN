@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Linq;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
         deathScreen.SetActive(false);
         winScreen.SetActive(false);
         settings.SetActive(false);
+        deathText.text = "";
     }
 
     void Start()
@@ -150,27 +151,11 @@ public class GameManager : MonoBehaviour
         }
         Cursor.lockState = CursorLockMode.None;
         deathButtons.SetActive(true);
+        StartCoroutine(ScrollDeathText());
     }
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape) && !bGameOver)
-        {
-            if (!settings.active)
-            {
-                isInUI = true;
-                Cursor.lockState = CursorLockMode.None;
-                Time.timeScale = 0f;
-                settings.SetActive(true);
-            }
-            else
-            {
-                isInUI = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                Time.timeScale = 1;
-                settings.SetActive(false);
-            }
-        }
 
         if(deathButtons.activeInHierarchy)
         {
@@ -202,5 +187,22 @@ public class GameManager : MonoBehaviour
         winScreen.SetActive(true);
         isInUI = true;
         bGameOver = true;
+    }
+
+    public string deathTip;
+
+    [SerializeField]
+    private TMP_Text deathText;
+
+    public IEnumerator ScrollDeathText()
+    {
+        deathText.text = "";
+
+        foreach(char character in deathTip)
+        {
+            deathText.text = deathText.text + character;
+            yield return new WaitForSeconds(0.02f);
+        }
+
     }
 }

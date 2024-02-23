@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FlashlightItem : MonoBehaviour, IItem
 {
-    bool isOn;
+    bool isOn = true;
 
     [SerializeField]
     private Light lightSource;
@@ -22,12 +22,6 @@ public class FlashlightItem : MonoBehaviour, IItem
     {
         return 3;
     }
-
-    void Start()
-    {
-        isOn = true;
-    }
-
     void OnEnable()
     {
         src.PlayOneShot(equipSound);

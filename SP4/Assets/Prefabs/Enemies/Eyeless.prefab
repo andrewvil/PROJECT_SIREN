@@ -238,6 +238,9 @@ MonoBehaviour:
   waypointIndex: 0
   isChasingAudio: 0
   animator: {fileID: 631444744128007367}
+  src: {fileID: 1813398880}
+  chaseClip: {fileID: 8300000, guid: 15b2544a795a88e44bb6225d42bcbe2c, type: 3}
+  idleClip: {fileID: 8300000, guid: 8c578e3f850cabd45b098fb9d8159787, type: 3}
 --- !u!82 &1813398880
 AudioSource:
   m_ObjectHideFlags: 0
@@ -260,7 +263,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 15
+  MaxDistance: 30
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0

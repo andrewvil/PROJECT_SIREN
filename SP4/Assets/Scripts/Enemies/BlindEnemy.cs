@@ -28,20 +28,23 @@ public class BlindEnemy : EnemyBase, IAudioObserver, ISightObserver, IPhotoObser
 
     Coroutine patrolCooldownCoroutine;
 
+    [SerializeField] private AudioSource src;
+
+    [SerializeField] private AudioClip chaseClip;
+    [SerializeField] private AudioClip idleClip;
+
     public override void FSM()
     {
         if(isChasingAudio)
         {
+            if(patrolCooldownCoroutine==null)
+                patrolCooldownCoroutine = StartCoroutine(ReturnToPatrol());
             if(Vector3.Distance(audioPosition,transform.position) > 1)
             {
                 MoveToPos(audioPosition);
                 animator.SetInteger("Move", 2);
             }
-            else
-            {
-                if(patrolCooldownCoroutine==null)
-                    patrolCooldownCoroutine = StartCoroutine(ReturnToPatrol());
-            }
+            
         }
         else
         {
@@ -65,6 +68,8 @@ public class BlindEnemy : EnemyBase, IAudioObserver, ISightObserver, IPhotoObser
         isChasingAudio = false;
         targetObject = null;
         patrolCooldownCoroutine = null;
+        src.PlayOneShot(idleClip);
+        src.Play();
     }
 
     public void Notify(Vector3 position, GameObject source)
@@ -85,6 +90,9 @@ public class BlindEnemy : EnemyBase, IAudioObserver, ISightObserver, IPhotoObser
         audioPosition = position;
         isChasingAudio = true;
         speed = 10f;
+
+        src.PlayOneShot(chaseClip);
+        if(!src.isPlaying) src.Play();
     }
 
     void Awake()
@@ -97,6 +105,11 @@ public class BlindEnemy : EnemyBase, IAudioObserver, ISightObserver, IPhotoObser
     }
     void Update()
     {
+        if(GameManager.instance.bGameOver) {    
+            if(src.enabled)
+                src.enabled = false;
+            return;
+        }
         FSM();
     }
 
@@ -118,12 +131,21 @@ public class BlindEnemy : EnemyBase, IAudioObserver, ISightObserver, IPhotoObser
         return "DANGER";
     }
 
+    void Start()
+    {
+        damage = 35;
+        allowAttack = true;
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Player"))
         {
+            Debug.Log("i hit player");
             GameManager.instance.lastHitEnemy = jumpscareCam;
+            GameManager.instance.deathTip = "Don't make a sound around the EYELESS.";
             AttackPlayer();
+            src.Stop();
         }
     }
 }

@@ -80,15 +80,25 @@ public class UIManager : MonoBehaviour
     public void SetCracked(int health)
     {
         if (health < 70)
+        {
+            PlayerAudioController.instance.PlayAudio(AUDIOSOUND.GLASS1);
             cracked.SetActive(true);
+        }
         else if (health > 70)
             cracked.SetActive(false);
         if (health < 40)
+        {
+            PlayerAudioController.instance.PlayAudio(AUDIOSOUND.CRITICAL);
+            PlayerAudioController.instance.PlayAudio(AUDIOSOUND.GLASS2);
             cracked1.SetActive(true);
+        }
         else if (health > 40)
             cracked1.SetActive(false);
         if (health < 10)
+        {
+            PlayerAudioController.instance.PlayAudio(AUDIOSOUND.GLASS3);
             cracked2.SetActive(true);
+        }
         else if (health > 10)
             cracked2.SetActive(false);
     }
@@ -172,4 +182,6 @@ public class UIManager : MonoBehaviour
         ambientAC.clip = dead;
         ambientAC.Play();
     }
+
+    
 }

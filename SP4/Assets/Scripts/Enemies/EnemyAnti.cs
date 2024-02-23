@@ -33,10 +33,12 @@ public class EnemyAnti : EnemyBase
 
         ChangeState(State.IDLE);
         src.PlayOneShot(idleSound);
+        allowAttack = true;
     }
 
     private void Update()
     {
+        if(GameManager.instance.bGameOver) return;
         Vector3 direction = target.position - transform.position;
         direction.y = 0f;
         transform.forward = direction;
@@ -68,6 +70,7 @@ public class EnemyAnti : EnemyBase
         if (currState == State.RAGE)
         {
             GameManager.instance.lastHitEnemy = deathCam;
+            GameManager.instance.deathTip = "Avoid using your night vision for too long.";
             AttackPlayer();
             StopCoroutine(chaseCoroutine);
         }
