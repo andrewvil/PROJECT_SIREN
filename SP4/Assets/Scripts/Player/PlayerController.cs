@@ -47,9 +47,11 @@ public class PlayerController : MonoBehaviour, IHealth
     private Bloom damageBloom;
     #endregion
 
+    bool godmode;
+
     void Start()
     {
-        
+        godmode = false;
         InitHealth();
         GetInventory();
 
@@ -102,12 +104,18 @@ public class PlayerController : MonoBehaviour, IHealth
                     UpdateHealth(healthItemCheck.GetHealth());
                 }
 
-                inventory[equippedIndex].GetComponent<IItem>().OnPrimaryAction();
+                IItem item = inventory[equippedIndex].GetComponent<IItem>();
+                item.OnPrimaryAction();
 
                 if(inventory[equippedIndex].transform.parent == null)
                 {
                     GetInventory();
                     SwapItem(false, true);
+                }
+
+                if(item.IsActionLoud())
+                {
+                    AlertSoundObservers();
                 }
             }
             if(Input.GetMouseButtonUp(0))
@@ -146,7 +154,8 @@ public class PlayerController : MonoBehaviour, IHealth
         //for testing only.
         if(Input.GetKeyDown(KeyCode.H))
         {
-            UpdateHealth(-35);
+            godmode = !godmode;
+            Debug.Log(godmode?"godmode on":"godmode off");
         }
         HandleAdrenaline();
 
@@ -242,6 +251,7 @@ public class PlayerController : MonoBehaviour, IHealth
     public void UpdateHealth(int amt)
     {
         if(GameManager.instance.bGameOver) return;
+        if(godmode) return;
         health += amt;
         if(health > maxHealth) health = maxHealth;
 
@@ -394,6 +404,14 @@ public class PlayerController : MonoBehaviour, IHealth
                     hit.collider.gameObject.layer = 8;
                 }
             }
+        }
+    }
+
+    private void AlertSoundObservers()
+    {
+        foreach(GameObject obj in sightController.GetComponent<SightController>().GetObjectsInRange())
+        {
+            obj.GetComponent<IAudioObserver>()?.Notify(transform.position,gameObject);
         }
     }
 }

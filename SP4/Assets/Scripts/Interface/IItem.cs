@@ -21,4 +21,6 @@ public interface IItem
     public void OnEMPOff();
 
     public void GetRequiredControllers(GameObject obj, GameObject sightController);
+
+    public bool IsActionLoud() => false;
 }

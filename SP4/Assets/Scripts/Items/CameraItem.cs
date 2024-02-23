@@ -137,4 +137,6 @@ public class CameraItem : MonoBehaviour, IItem
     {
         mr.material = screenMaterial;
     }
+
+    public bool IsActionLoud() => true;
 }
