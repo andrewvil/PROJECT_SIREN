@@ -40,7 +40,9 @@ public class AnimationEventEMP : MonoBehaviour
             canHit = false;
             if (GameManager.instance.bGameOver) return;
             GameManager.instance.lastHitEnemy = emp.jumpscareCamTransform.gameObject;
+            GameManager.instance.deathTip = "Don't let the EMP fully charge. Try deactivating it.";
             emp.AttackPlayer();
+
         }
     }
 
