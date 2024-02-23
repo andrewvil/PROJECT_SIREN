@@ -17,6 +17,9 @@ public class SceneSwitcher : MonoBehaviour
             case 1:
                 playerData.LoadData();
                 break;
+            case 2:
+                Application.Quit();
+                break;
         }
         SceneManager.LoadScene("DemoScene");
     }
