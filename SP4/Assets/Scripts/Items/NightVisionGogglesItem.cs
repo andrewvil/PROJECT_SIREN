@@ -236,8 +236,12 @@ public class NightVisionGogglesItem : MonoBehaviour, IItem
 
     private void SpawnNVEnemy(Vector3 spawnPosition)
     {
-        if (TutorialManager.instance.tut == TutorialManager.TUTORIAL.DONE)
+
+        if (TutorialManager.instance.tut != TutorialManager.TUTORIAL.DONE)
+        {
+            Debug.Log("Not Done");
             return;
+        }
 
         bool spawned = false;
         float x;
