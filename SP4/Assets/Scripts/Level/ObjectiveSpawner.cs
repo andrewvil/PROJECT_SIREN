@@ -51,7 +51,7 @@ public class ObjectiveSpawner : MonoBehaviour
         foreach (Transform pos in lvl3KeycardSpawnpoints)
             list.Add(pos);
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 4; i++)
         {
             int rng = Random.Range(0, lvl3KeycardSpawnpoints.Count - i);
             float rot = Random.Range(-180f, 180f);
@@ -66,7 +66,7 @@ public class ObjectiveSpawner : MonoBehaviour
         foreach (Transform pos in lvl4KeycardSpawnpoints)
             list.Add(pos);
         
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             int rng = Random.Range(0, lvl4KeycardSpawnpoints.Count - i);
             float rot = Random.Range(-180f, 180f);
@@ -81,7 +81,7 @@ public class ObjectiveSpawner : MonoBehaviour
         foreach (Transform pos in lvl5KeycardSpawnpoints)
             list.Add(pos);
         
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
             int rng = Random.Range(0, lvl5KeycardSpawnpoints.Count - i);
             float rot = Random.Range(-180f, 180f);
