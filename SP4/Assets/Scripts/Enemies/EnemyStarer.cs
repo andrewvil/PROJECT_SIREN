@@ -12,9 +12,11 @@ public class EnemyStarer : EnemyBase, ISightObserver, IPhotoObserver
     [SerializeField]
     private Transform jumpscareCamTransform;
 
+    [SerializeField] private AudioSource src;
+
     private bool goingUp = true;
     private float walkSpeed = 3.5f;
-    private float chaseSpeed = 22.5f;
+    private float chaseSpeed = 5.5f;
     private float waitTime = 0.0f;
 
     public bool playerSpotted;
@@ -32,6 +34,7 @@ public class EnemyStarer : EnemyBase, ISightObserver, IPhotoObserver
     // Start is called before the first frame update
     void Start()
     {
+        allowAttack = true;
         speed = walkSpeed;
         isSeen = playerSpotted = false;
         agent = GetComponent<NavMeshAgent>();
@@ -82,6 +85,10 @@ public class EnemyStarer : EnemyBase, ISightObserver, IPhotoObserver
                         {
                             target = playerTarget.transform;
                             speed = chaseSpeed;
+                            if(!src.isPlaying)
+                            {
+                                src.Play();
+                            }
                             currentState = State.CHASE;
                         }
                     }
@@ -106,6 +113,10 @@ public class EnemyStarer : EnemyBase, ISightObserver, IPhotoObserver
                     {
                         target = playerTarget.transform;
                         speed = chaseSpeed;
+                        if(!src.isPlaying)
+                        {
+                            src.Play();
+                        }
                         currentState = State.CHASE;
                     }
                 }
@@ -127,12 +138,14 @@ public class EnemyStarer : EnemyBase, ISightObserver, IPhotoObserver
                         AttackPlayer();
                         speed = waitTime = 0;
                         agent.velocity= Vector3.zero;
+                        src.Stop();
                         currentState = State.IDLE;
                     }
                 }
                 else
                 {
                     speed = waitTime = 0;
+                    src.Stop();
                     currentState = State.IDLE;
                 }
                 break;

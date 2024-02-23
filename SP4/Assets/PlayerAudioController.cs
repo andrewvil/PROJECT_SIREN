@@ -58,7 +58,11 @@ public enum AUDIOSOUND
     HEAL = 15,
 
     SYSTEMSDOWN = 16,
-    CRITICAL = 17
+    CRITICAL = 17,
+
+    DECOYEQUIP = 18,
+
+    HURT = 19
 
     //more to add
 }

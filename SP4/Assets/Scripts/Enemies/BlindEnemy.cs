@@ -28,6 +28,11 @@ public class BlindEnemy : EnemyBase, IAudioObserver, ISightObserver, IPhotoObser
 
     Coroutine patrolCooldownCoroutine;
 
+    [SerializeField] private AudioSource src;
+
+    [SerializeField] private AudioClip chaseClip;
+    [SerializeField] private AudioClip idleClip;
+
     public override void FSM()
     {
         if(isChasingAudio)
@@ -63,8 +68,8 @@ public class BlindEnemy : EnemyBase, IAudioObserver, ISightObserver, IPhotoObser
         isChasingAudio = false;
         targetObject = null;
         patrolCooldownCoroutine = null;
-        StopCoroutine(hitCoroutine);
-        hitCoroutine = null;
+        src.PlayOneShot(idleClip);
+        src.Play();
     }
 
     public void Notify(Vector3 position, GameObject source)
@@ -81,11 +86,13 @@ public class BlindEnemy : EnemyBase, IAudioObserver, ISightObserver, IPhotoObser
         {
             target = targetObject.transform;
         }
-        hitCoroutine = StartCoroutine(HitPlayerCoroutine());
         Debug.Log("hi");
         audioPosition = position;
         isChasingAudio = true;
         speed = 10f;
+
+        src.PlayOneShot(chaseClip);
+        if(!src.isPlaying) src.Play();
     }
 
     void Awake()
@@ -98,7 +105,11 @@ public class BlindEnemy : EnemyBase, IAudioObserver, ISightObserver, IPhotoObser
     }
     void Update()
     {
-        if(GameManager.instance.bGameOver) return;
+        if(GameManager.instance.bGameOver) {    
+            if(src.enabled)
+                src.enabled = false;
+            return;
+        }
         FSM();
     }
 
@@ -126,32 +137,15 @@ public class BlindEnemy : EnemyBase, IAudioObserver, ISightObserver, IPhotoObser
         allowAttack = true;
     }
 
-    Coroutine hitCoroutine = null;
-
-    private IEnumerator HitPlayerCoroutine()
+    void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(targetObject.tag);
-        if(targetObject.CompareTag("Player"))
+        if(collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("try attack player");
-            if(Physics.Raycast(transform.position,targetObject.transform.position-transform.position,1f))
-            {
-                GameManager.instance.lastHitEnemy = jumpscareCam;
-                GameManager.instance.deathTip = "Don't make a sound around the EYELESS.";
-                AttackPlayer();
-                //targetObject.GetComponent<IHealth>().UpdateHealth(-damage);
-            }
+            Debug.Log("i hit player");
+            GameManager.instance.lastHitEnemy = jumpscareCam;
+            GameManager.instance.deathTip = "Don't make a sound around the EYELESS.";
+            AttackPlayer();
+            src.Stop();
         }
-
-        yield return new WaitForSeconds(1f);
-        hitCoroutine = StartCoroutine(HitPlayerCoroutine());
     }
-    // void OnCollisionEnter(Collision collision)
-    // {
-    //     if(collision.gameObject.CompareTag("Player"))
-    //     {
-    //         GameManager.instance.lastHitEnemy = jumpscareCam;
-    //         AttackPlayer();
-    //     }
-    // }
 }

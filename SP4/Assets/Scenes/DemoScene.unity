@@ -17098,6 +17098,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ca6cd4d9626cd9e47a4fe2d504dd6b4d, type: 3}
   - {fileID: 8300000, guid: 90d07cee23785c64f95259de8560f5b9, type: 3}
   - {fileID: 8300000, guid: ef1e0785faefa284fae92d9fb9ce1b34, type: 3}
+  - {fileID: 8300000, guid: a67477ee04db45847a619591e76309c1, type: 3}
+  - {fileID: 8300000, guid: 707aa718d195970499fe72b0a32125ce, type: 3}
   src: {fileID: 371330081}
 --- !u!1001 &371470562
 PrefabInstance:

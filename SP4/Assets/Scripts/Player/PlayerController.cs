@@ -248,7 +248,6 @@ public class PlayerController : MonoBehaviour, IHealth
         else if (health <= 0)
         {
             health = 0;
-            PlayerAudioController.instance.PlayAudio(AUDIOSOUND.JUMPSCARE);
             Die();
             return;
         }
@@ -256,6 +255,7 @@ public class PlayerController : MonoBehaviour, IHealth
         //play adrenaline
         if(amt < 0)
         {
+            PlayerAudioController.instance.PlayAudio(AUDIOSOUND.HURT);
             if(adrenalineCo==null)
                 adrenalineCo = StartCoroutine(AdrenalineCoroutine());
         }
@@ -315,11 +315,14 @@ public class PlayerController : MonoBehaviour, IHealth
         UIManager.instance.DisableAllPostProcessing();
         damageBloom.intensity.value = 0f;
 
+        //jumpscare
         if(GameManager.instance.lastHitEnemy) {
             Camera.main.transform.parent = GameManager.instance.lastHitEnemy.transform;
             Camera.main.transform.localRotation = Quaternion.identity;
             Camera.main.transform.localPosition = Vector3.zero;
+            PlayerAudioController.instance.PlayAudio(AUDIOSOUND.JUMPSCARE);
         }
+        
         if(heartbeatCo != null)
         {
             StopCoroutine(heartbeatCo);
