@@ -19,9 +19,26 @@ public class SightController : MonoBehaviour
         }
         if (other.gameObject.layer == 7)
         {
+            if (other.gameObject.CompareTag("Maze") && Vector3.Distance(transform.position, other.transform.position) <= 3.0f)
+            {
+                Debug.Log(Vector3.Distance(transform.position, other.transform.position));
+                other.gameObject.layer = 8;
+            }
             if (other.gameObject.CompareTag("Door"))
             {
                 other.gameObject.GetComponent<LevelDoor>().SetDoorLayer(8);
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer == 7)
+        {
+            if (other.gameObject.CompareTag("Maze") && Vector3.Distance(transform.position, other.transform.position) <= 3.0f)
+            {
+                Debug.Log(Vector3.Distance(transform.position, other.transform.position));
+                other.gameObject.layer = 8;
             }
         }
     }
