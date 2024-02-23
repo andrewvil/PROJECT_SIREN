@@ -80,4 +80,6 @@ public class FlashlightItem : MonoBehaviour, IItem
     {
         
     }
+
+    public bool IsActionLoud() => true;
 }
