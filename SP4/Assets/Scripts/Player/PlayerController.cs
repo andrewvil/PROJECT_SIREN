@@ -322,8 +322,15 @@ public class PlayerController : MonoBehaviour, IHealth
         }
     }
 
+    [SerializeField]
+    private GameObject levelMap;
+
+    [SerializeField]
+    private GameObject dieScreen;
+
     public void Die()
     {
+        dieScreen.SetActive(true);
         playerData.LoadData();
         if(adrenalineCo != null)
         {
@@ -333,6 +340,7 @@ public class PlayerController : MonoBehaviour, IHealth
             adrenalineColor.active = false;
             cameraController.StopShake();
         }
+        levelMap.SetActive(false);
 
         GameManager.instance.bGameOver = true;
         model.SetActive(false);
@@ -368,6 +376,7 @@ public class PlayerController : MonoBehaviour, IHealth
         }
         
         yield return new WaitForSeconds(1.25f);
+        dieScreen.SetActive(false);
         UIManager.instance.OnDie();
         GameManager.instance.Die();
     }
