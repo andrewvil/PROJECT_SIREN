@@ -10,11 +10,23 @@ public class CheckpointManager : MonoBehaviour
     [SerializeField]
     private PlayerData playerData;
 
+    [SerializeField] private GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
         checkpoints = new List<Checkpoint>();
         GetCheckpoints();
+        if(playerData.hasLoad)
+        {
+            foreach(Checkpoint checkpoint in checkpoints)
+            {
+                if(checkpoint.index == playerData.lastCheckpoint)
+                {
+                    player.transform.position = checkpoint.gameObject.transform.position;
+                }
+            }
+        }
     }
 
     private void GetCheckpoints()

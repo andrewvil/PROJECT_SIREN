@@ -10,7 +10,7 @@ public class ItemHealth : MonoBehaviour, IInteract, IPhotoObserver, ISightObserv
         return health;
     }
 
-    bool isDropped;
+    public bool isDropped;
 
     [SerializeField]
     private Rigidbody rb;

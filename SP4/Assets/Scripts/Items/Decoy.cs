@@ -27,7 +27,7 @@ public class Decoy : MonoBehaviour, IItem, ISightObserver, IPhotoObserver, IInte
 
     [SerializeField] private List<GameObject> holograms;
 
-    bool isDroppped;
+    public bool isDroppped;
 
     void Awake()
     {

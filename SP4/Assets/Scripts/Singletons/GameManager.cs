@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] 
     private GameObject winScreen;
 
-    private List<int> inventoryIds = new();
+    public List<int> inventoryIds = new();
 
     public int currCheckpoint;
 
@@ -73,12 +73,6 @@ public class GameManager : MonoBehaviour
 
     public void Save()
     {
-        //Inventory
-        inventoryIds.Clear();
-        foreach(GameObject obj in inventoryObject)
-        {
-            inventoryIds.Add(obj.GetComponent<IItem>().GetItemID());
-        }
 
         //Floors
         playerData.floorLayers.Clear();

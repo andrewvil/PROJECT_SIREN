@@ -10,8 +10,7 @@ public class Checkpoint : MonoBehaviour, ISightObserver, IPhotoObserver
     [SerializeField] private MeshRenderer mr;
 
     public CheckpointManager cmp;
-    [SerializeField]
-    private int index;
+    public int index;
 
     bool checkpointActive;
 
@@ -28,13 +27,14 @@ public class Checkpoint : MonoBehaviour, ISightObserver, IPhotoObserver
     public void OnPhotoTaken()
     {
         //TODO: Save
-        cmp.SetCheckpoint(index);
+        
         UIManager.instance.DisplayTip("Checkpoint", "Game saved!", false);
         GameManager.instance.OnCheckpointChanged();
         GameManager.instance.checkpt = this;
+        GameManager.instance.currCheckpoint = index;
         src.PlayOneShot(saveSfx);
         checkpointActive = true;
-        
+        cmp.SetCheckpoint(index);
 
         if(TutorialManager.instance)
         {

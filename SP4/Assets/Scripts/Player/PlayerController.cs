@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -33,6 +34,10 @@ public class PlayerController : MonoBehaviour, IHealth
 
     [SerializeField] private Volume damageVolume;
 
+    [SerializeField] private GameObject healthPrefab;
+    [SerializeField] private GameObject decoyPrefab;
+    [SerializeField] private List<int> itemsIds;
+
     private int equippedIndex;
     private FlashlightItem flashlight;
 
@@ -51,6 +56,30 @@ public class PlayerController : MonoBehaviour, IHealth
 
     void Start()
     {
+        //load items
+        if(playerData.hasLoad)
+        {
+            foreach(int id in playerData.inventoryIds)
+            {
+                switch(id)
+                {
+                    case 2:
+                    GameObject decoy = Instantiate(decoyPrefab,inventoryObject.transform);
+                    decoy.GetComponent<Decoy>().isDroppped = false;
+                    decoy.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    decoy.SetActive(false);
+                    break;
+                    case 5:
+                    GameObject health = Instantiate(healthPrefab,inventoryObject.transform);
+                    health.GetComponent<ItemHealth>().isDropped = false;
+                    health.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    health.SetActive(false);
+                    break;
+                }
+            }
+        }
+
+
         godmode = false;
         InitHealth();
         GetInventory();
@@ -71,6 +100,7 @@ public class PlayerController : MonoBehaviour, IHealth
         adrenalineOn = false;
         //
 
+        
         //damage PP
         damageVolume.profile.TryGet<Bloom>(out damageBloom);
     }
@@ -79,8 +109,6 @@ public class PlayerController : MonoBehaviour, IHealth
     {
         if(GameManager.instance.bGameOver) return;
         sightController.transform.position = transform.position;
-
-        
 
         //weapon swapping
         if(Input.GetAxis("Mouse ScrollWheel") > 0f)
@@ -140,16 +168,7 @@ public class PlayerController : MonoBehaviour, IHealth
                     obj.GetComponent<IItem>()?.RunBackgroundProcesses();
             }
         }
-        // foreach(GameObject obj in sightController.GetComponent<SightController>().GetObjectsInRange(15f))
-        // {
-        //     if(obj.GetComponent<EnemyBase>()!=null)
-        //     {
-        //         if(adrenalineCo==null)
-        //             adrenalineCo = StartCoroutine(AdrenalineCoroutine());
-        //         break;
-        //     }
-            
-        // }
+
 
         //for testing only.
         if(Input.GetKeyDown(KeyCode.H))
@@ -203,14 +222,19 @@ public class PlayerController : MonoBehaviour, IHealth
     public void GetInventory()
     {
         inventory.Clear();
-        playerData.inventoryIds.Clear();
+        GameManager.instance.inventoryIds.Clear();
         //get inventory
         foreach(Transform child in inventoryObject.transform)
         {
             IItem item = child.GetComponent<IItem>();
             item.GetRequiredControllers(gameObject, sightController);
             inventory.Add(child.gameObject);
-            playerData.inventoryIds.Add(item.GetItemID());
+
+            //only contain pickups
+            if(itemsIds.Contains(item.GetItemID()))
+            {
+                GameManager.instance.inventoryIds.Add(item.GetItemID());
+            }
 
             FlashlightItem fs = child.GetComponent<FlashlightItem>();
             if(fs!=null) flashlight=fs;
