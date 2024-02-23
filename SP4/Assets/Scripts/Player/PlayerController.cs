@@ -78,8 +78,6 @@ public class PlayerController : MonoBehaviour, IHealth
                 }
             }
         }
-
-
         godmode = false;
         InitHealth();
         GetInventory();
@@ -175,6 +173,11 @@ public class PlayerController : MonoBehaviour, IHealth
         {
             godmode = !godmode;
             Debug.Log(godmode?"godmode on":"godmode off");
+        }
+
+        if(Input.GetKeyDown(KeyCode.J))
+        {
+            UpdateHealth(-20);
         }
         HandleAdrenaline();
 
@@ -321,6 +324,7 @@ public class PlayerController : MonoBehaviour, IHealth
 
     public void Die()
     {
+        playerData.LoadData();
         if(adrenalineCo != null)
         {
             adrenalineOn = false;

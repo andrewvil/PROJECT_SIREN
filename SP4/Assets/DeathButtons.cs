@@ -11,6 +11,7 @@ public class DeathButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     [SerializeField]
     private TMP_Text buttonTMP;
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         buttonTMP.text = ">" + text;

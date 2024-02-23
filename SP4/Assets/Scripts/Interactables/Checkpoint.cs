@@ -29,18 +29,23 @@ public class Checkpoint : MonoBehaviour, ISightObserver, IPhotoObserver
         //TODO: Save
         
         UIManager.instance.DisplayTip("Checkpoint", "Game saved!", false);
-        GameManager.instance.OnCheckpointChanged();
-        GameManager.instance.checkpt = this;
-        GameManager.instance.currCheckpoint = index;
-        src.PlayOneShot(saveSfx);
-        checkpointActive = true;
-        cmp.SetCheckpoint(index);
+        ActivateCheckpoint();
 
         if(TutorialManager.instance)
         {
             TutorialManager.instance.picDone = true;
         }
         GameManager.instance.Save();
+    }
+
+    public void ActivateCheckpoint()
+    {
+        GameManager.instance.OnCheckpointChanged();
+        GameManager.instance.checkpt = this;
+        GameManager.instance.currCheckpoint = index;
+        src.PlayOneShot(saveSfx);
+        checkpointActive = true;
+        cmp.SetCheckpoint(index);
     }
 
     void Update()

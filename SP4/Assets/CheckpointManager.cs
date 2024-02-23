@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CheckpointManager : MonoBehaviour
@@ -17,26 +18,36 @@ public class CheckpointManager : MonoBehaviour
     {
         checkpoints = new List<Checkpoint>();
         GetCheckpoints();
+    }
+
+    private void GetCheckpoints()
+    {
+        int indexes = 1;
+        foreach(Checkpoint obj in GetComponentsInChildren<Checkpoint>())
+        {
+            checkpoints.Add(obj);
+            obj.GetComponent<Checkpoint>().cmp = this;
+            obj.GetComponent<Checkpoint>().index = indexes;
+            indexes++;
+        }
+
         if(playerData.hasLoad)
         {
             foreach(Checkpoint checkpoint in checkpoints)
             {
                 if(checkpoint.index == playerData.lastCheckpoint)
                 {
+                    checkpoint.ActivateCheckpoint();
+                    player.GetComponent<CharacterController>().enabled = false;
                     player.transform.position = checkpoint.gameObject.transform.position;
+                    player.GetComponent<CharacterController>().enabled = true;
+                    return;
                 }
             }
         }
     }
 
-    private void GetCheckpoints()
-    {
-        foreach(Checkpoint obj in GetComponentsInChildren<Checkpoint>())
-        {
-            checkpoints.Add(obj);
-            obj.GetComponent<Checkpoint>().cmp = this;
-        }
-    }
+
 
     public void SetCheckpoint(int index)
     {
