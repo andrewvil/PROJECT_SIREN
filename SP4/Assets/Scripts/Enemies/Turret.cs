@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Turret : EnemyBase
+public class Turret : EnemyBase, ISightObserver, IPhotoObserver
 {
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject warningLight;
@@ -150,4 +150,21 @@ public class Turret : EnemyBase
         GameManager.instance.deathTip = "Avoid the turret's line of fire";
         target.GetComponent<IHealth>().UpdateHealth(-damage);
     }
+
+    public void OnSighted()
+    {
+
+    }
+
+    public void OnLookAway()
+    {
+
+    }
+
+    public void OnPhotoTaken()
+    {
+        UIManager.instance.DisplayTip("Starer", "Don't. Look. Away.", true, true);
+    }
+
+    public string GetDetails() => "DANGER";
 }
