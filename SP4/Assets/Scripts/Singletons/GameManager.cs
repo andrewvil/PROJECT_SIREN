@@ -62,7 +62,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
+        if(playerData.hasLoad)
+        {
+            accessLevel = playerData.lastAccessLevel;
+        }
     }
 
     public void SetAccessLevel(int lvl)
