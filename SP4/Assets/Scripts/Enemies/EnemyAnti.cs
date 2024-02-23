@@ -70,7 +70,7 @@ public class EnemyAnti : EnemyBase
         if (currState == State.RAGE)
         {
             GameManager.instance.lastHitEnemy = deathCam;
-            GameManager.instance.deathTip = "Avoid using your night vision for too long.";
+            GameManager.instance.deathTip = "Be careful when you activate night vision";
             AttackPlayer();
             StopCoroutine(chaseCoroutine);
         }
