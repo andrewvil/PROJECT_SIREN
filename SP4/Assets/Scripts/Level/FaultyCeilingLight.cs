@@ -7,6 +7,7 @@ public class FaultyCeilingLight : MonoBehaviour
     [SerializeField] private GameObject objToDrop;
     [SerializeField] private float timeToFall;
     [SerializeField] private GameObject indicator;
+    [SerializeField] private GameObject sparks;
     [SerializeField] private float timeBetweenFlash;
 
     private float timeElapsed = 0f;
@@ -17,6 +18,7 @@ public class FaultyCeilingLight : MonoBehaviour
     private void Start()
     {
         indicator.SetActive(lightActive);
+        sparks.SetActive(lightActive);
     }
     
     private void Update()
@@ -42,6 +44,7 @@ public class FaultyCeilingLight : MonoBehaviour
             triggered = true;
             lightActive = false;
             indicator.SetActive(lightActive);
+            sparks.SetActive(lightActive);
         }
     }
 }

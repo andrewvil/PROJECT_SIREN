@@ -395,6 +395,7 @@ MonoBehaviour:
   objToDrop: {fileID: 8339542860213372426}
   timeToFall: 0.3
   indicator: {fileID: 4027957817452880616}
+  sparks: {fileID: 2961507342625434629}
   timeBetweenFlash: 0.1
 --- !u!1001 &2961942202763066319
 PrefabInstance:
@@ -406,6 +407,10 @@ PrefabInstance:
     - target: {fileID: 1000011396044746, guid: 96b2ec0239d11fa4b9792311efceb8ed, type: 3}
       propertyPath: m_Name
       value: ElectricalSparks
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000011396044746, guid: 96b2ec0239d11fa4b9792311efceb8ed, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000012832170722, guid: 96b2ec0239d11fa4b9792311efceb8ed, type: 3}
       propertyPath: m_RootOrder
@@ -456,6 +461,12 @@ PrefabInstance:
 --- !u!4 &2960231923132881197 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000012832170722, guid: 96b2ec0239d11fa4b9792311efceb8ed,
+    type: 3}
+  m_PrefabInstance: {fileID: 2961942202763066319}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2961507342625434629 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1000011396044746, guid: 96b2ec0239d11fa4b9792311efceb8ed,
     type: 3}
   m_PrefabInstance: {fileID: 2961942202763066319}
   m_PrefabAsset: {fileID: 0}
