@@ -62,7 +62,13 @@ public enum AUDIOSOUND
 
     DECOYEQUIP = 18,
 
-    HURT = 19
+    HURT = 19,
+
+    GLASS1 = 20,
+    GLASS2 = 21,
+
+    GLASS3 = 22,
+
 
     //more to add
 }
