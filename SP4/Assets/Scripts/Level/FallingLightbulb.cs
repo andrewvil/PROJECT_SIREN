@@ -18,7 +18,10 @@ public class FallingLightbulb : MonoBehaviour
             foreach(Collider hit in hits)
             {
                 if (hit.GetComponent<IHealth>() != null)
+                {
+                    GameManager.instance.lastHitEnemy = null;
                     hit.GetComponent<IHealth>().UpdateHealth(-damage);
+                }
             }
             triggered = true;
         }

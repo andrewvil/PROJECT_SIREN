@@ -146,6 +146,7 @@ public class Turret : EnemyBase
 
     public override void AttackPlayer()
     {
+        GameManager.instance.lastHitEnemy = null;
         GameManager.instance.deathTip = "Avoid the turret's line of fire";
         target.GetComponent<IHealth>().UpdateHealth(-damage);
     }

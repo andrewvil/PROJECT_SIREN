@@ -330,7 +330,7 @@ public class PlayerController : MonoBehaviour, IHealth
 
     public void Die()
     {
-        dieScreen.SetActive(true);
+        
         playerData.LoadData();
         if(adrenalineCo != null)
         {
@@ -362,11 +362,16 @@ public class PlayerController : MonoBehaviour, IHealth
         damageBloom.intensity.value = 0f;
 
         //jumpscare
-        if(GameManager.instance.lastHitEnemy) {
+        if(GameManager.instance.lastHitEnemy != null) {
             Camera.main.transform.parent = GameManager.instance.lastHitEnemy.transform;
             Camera.main.transform.localRotation = Quaternion.identity;
             Camera.main.transform.localPosition = Vector3.zero;
             PlayerAudioController.instance.PlayAudio(AUDIOSOUND.JUMPSCARE);
+        }
+        else
+        {
+            dieScreen.SetActive(true);
+            PlayerAudioController.instance.PlayAudio(AUDIOSOUND.DIE);
         }
         
         if(heartbeatCo != null)
