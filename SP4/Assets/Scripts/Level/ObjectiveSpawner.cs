@@ -41,8 +41,16 @@ public class ObjectiveSpawner : MonoBehaviour
 
     private void SpawnExitDoor()
     {
-        int rng = Random.Range(0, exitDoorSpawnpoints.Count);
-        Instantiate(exitDoorPrefab, exitDoorSpawnpoints[rng].position, exitDoorSpawnpoints[rng].rotation);
+        List<Transform> list = new List<Transform>();
+        foreach (Transform pos in exitDoorSpawnpoints)
+            list.Add(pos);
+
+        for (int i = 0; i < 2; i++)
+        {
+            int rng = Random.Range(0, exitDoorSpawnpoints.Count);
+            Instantiate(exitDoorPrefab, list[rng].position, exitDoorSpawnpoints[rng].rotation);
+            list.Remove(list[rng]);
+        }
     }
 
     private void SpawnLvl3Keycard()
