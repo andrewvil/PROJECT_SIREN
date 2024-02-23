@@ -138,6 +138,14 @@ public class EnemyEMP : EnemyBase, ISightObserver, IPhotoObserver
                     chargeCount = 0;
                     break;
                 }
+                else if (chargeCount == 4 && !(Vector3.Distance(transform.position, player.transform.position) < 30))
+                {
+                    timer = restTimerSet;
+                    ar.SetBool("charge", false);
+                    currentState = State.REST;
+                    chargeCount = 0;
+                    break;
+                }
                 break;
             case State.CHASE:
                 ar.SetBool("chase", true);
@@ -202,7 +210,7 @@ public class EnemyEMP : EnemyBase, ISightObserver, IPhotoObserver
 
     public void AttackDone()
     {
-        if (timer > 0)
+        if (timer > 0.5)
         {
             currentState = State.CHASE;
         }
