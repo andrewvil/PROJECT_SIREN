@@ -119,7 +119,7 @@ public class EnemyEMP : EnemyBase, ISightObserver, IPhotoObserver
                 else
                     timer = patrolTimerSet;
 
-                if (agent.remainingDistance < .75f)
+                if (Vector3.Distance(transform.position, target.transform.position) < .75f)
                     currWaypoint = Random.Range(0, patrolWaypoints.Count);
                 break;
             case State.CHARGE:
@@ -144,7 +144,7 @@ public class EnemyEMP : EnemyBase, ISightObserver, IPhotoObserver
                 speed = chaseSpeed;
                 timer -= Time.deltaTime;
 
-                if (agent.remainingDistance < 3)
+                if (Vector3.Distance(transform.position, target.transform.position) < 3)
                 {
                     ar.SetBool("chase", false);
                     currentState = State.ATTACK;
