@@ -67,7 +67,7 @@ public class EnemyAnti : EnemyBase
         if(GameManager.instance.bGameOver) 
             return;
             
-        if (currState == State.RAGE)
+        if (currState == State.RAGE && other.gameObject.CompareTag("Player"))
         {
             GameManager.instance.lastHitEnemy = deathCam;
             GameManager.instance.deathTip = "Be careful when you activate night vision";
