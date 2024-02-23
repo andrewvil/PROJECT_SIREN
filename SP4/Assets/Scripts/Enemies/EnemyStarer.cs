@@ -53,6 +53,7 @@ public class EnemyStarer : EnemyBase, ISightObserver, IPhotoObserver
     //StateManager
     public override void FSM()
     {
+        Debug.Log(patrolWaypoints[currWaypoint].name);
         if (isFlashed)
         {
             currWaypoint = Random.Range(0, patrolWaypoints.Count);
@@ -78,6 +79,7 @@ public class EnemyStarer : EnemyBase, ISightObserver, IPhotoObserver
                             }
                             target = patrolWaypoints[currWaypoint];
                             speed = walkSpeed;
+                            Move(target);
                             currentState = State.PATROL;
                         }
                         //Chase
@@ -89,6 +91,7 @@ public class EnemyStarer : EnemyBase, ISightObserver, IPhotoObserver
                             {
                                 src.Play();
                             }
+                            Move(target);
                             currentState = State.CHASE;
                         }
                     }
@@ -103,7 +106,7 @@ public class EnemyStarer : EnemyBase, ISightObserver, IPhotoObserver
                 if (!isSeen)
                 {
                     //Idle
-                    if (agent.remainingDistance <= 0.75f)
+                    if (Vector3.Distance(transform.position, target.transform.position) <= 0.75f)
                     {
                         speed = waitTime = 0;
                         currentState = State.IDLE;
@@ -117,6 +120,7 @@ public class EnemyStarer : EnemyBase, ISightObserver, IPhotoObserver
                         {
                             src.Play();
                         }
+                        Move(target);
                         currentState = State.CHASE;
                     }
                 }
@@ -152,7 +156,6 @@ public class EnemyStarer : EnemyBase, ISightObserver, IPhotoObserver
             default:
                 break;
         }
-        Move(target);
     }
 
     //See Player

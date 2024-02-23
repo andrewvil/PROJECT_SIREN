@@ -384,7 +384,7 @@ MonoBehaviour:
   rotationDest1: {x: 0, y: 120, z: 0}
   rotationDest2: {x: 0, y: 0, z: 0}
   rotationSpeed: 0.5
-  windUpTime: 1
+  windUpTime: 2
   rateOfFire: 5
   windUpSFX: {fileID: 8300000, guid: 24996173aca97bd45ab8ef59f0704f80, type: 3}
   fireSFX: {fileID: 8300000, guid: f801ba3b8f5404445927cc27d1839d0a, type: 3}
